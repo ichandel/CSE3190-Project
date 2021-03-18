@@ -26,6 +26,6 @@ class Colour:
     MEDIUM_AQUAMARINE = (102, 205, 170)
     DARK_CYAN = (0, 139, 139)
 
-class Image:
-    #PLAYER = "assets/bunny.png"
-    pass
+class Ships:
+    SHIP1 = "assets/fightership.png"
+    ALIEN_SHIP = "assets/alien ship(finished).png"

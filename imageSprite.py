@@ -31,3 +31,29 @@ class ImageSprite(MySprite):
     def wasdMove(self, KEYPRESSES):
         super().wasdMove(KEYPRESSES)
         self.flipImageX(KEYPRESSES)
+
+    def adMove(self, KEYPRESSES):
+        super().adMove(KEYPRESSES)
+        self.flipImageX(KEYPRESSES)
+
+    def enemieMovement(self,MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH = 0, MIN_HEIGHT =0):
+        self.X += self.MOVEMENTX
+        if self.X == MAX_WIDTH:
+            self.Y += self.MOVEMENTY
+            self.MOVEMENTX = self.MOVEMENTX*-1
+        elif self.X == MIN_WIDTH:
+            self.Y += self.MOVEMENTY
+            self.MOVEMENTX = self.MOVEMENTX*-1
+        self.updatePOS()
+
+    def checkBoundaries(self, MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH, MIN_HEIGHT):
+        if self.X > MAX_WIDTH - self.getWidth():
+            self.X = MAX_WIDTH - self.getWidth()
+        elif self.X < MIN_WIDTH:
+            self.X = MIN_WIDTH
+        if self.Y > MAX_HEIGHT - self.getHeight():
+            self.Y = MAX_HEIGHT - self.getHeight()
+        elif self.Y < MIN_HEIGHT:
+            self.Y = MIN_HEIGHT
+        self.updatePOS()
+

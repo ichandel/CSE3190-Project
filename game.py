@@ -4,13 +4,12 @@ Author: Ishaan Chandel
 Date: 2021-03-04
 """
 
-import pygame
-from random import randrange
-from window import Window
-from imageSprite import ImageSprite
-from loader import Image
-from text import Text
+from loader import Ships
 from loader import Colour
+from window import Window
+from text import Text
+from imageSprite import ImageSprite
+import pygame
 
 class Game:
 
@@ -19,9 +18,12 @@ class Game:
     def __init__(self):
         self.WINDOW = Window(WIDTH=1920, HEIGHT=1080, FPS=60)
         self.WINDOW.setBackgroundColor(Colour.GREY)
-        #self.PLAYER = ImageSprite(Image.PLAYER)
-        #self.PLAYER.setScale(2)
-        #self.PLAYER.setPOS((self.WINDOW.getVirtualWidth() - self.PLAYER.getWidth())//2, (self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight())//2)
+        self.PLAYER = ImageSprite(Ships.SHIP1)
+        self.PLAYER.setScale(1)
+        self.PLAYER.setPOS(960,900)
+        self.ALIEN = ImageSprite(Ships.ALIEN_SHIP)
+        self.ALIEN.setScale(2)
+        self.ALIEN.setPOS(120,102)
         self.SCORE = 0
         self.SCORE_TEXT = Text(f"Score: {self.SCORE}")
 
@@ -102,7 +104,7 @@ class Game:
             if KEYPRESSES[pygame.K_5]:
                 pass
 
-            if KEYPRESSES[pygame.K_RETURN]:  # this line runs the maing game once the user is ready
+            if KEYPRESSES[pygame.K_RETURN]:  # this line runs the main game once the user is ready
                 self.runPhase1()
             if KEYPRESSES[pygame.K_ESCAPE]:  # this exits the program when the user wishes to
                 exit()
@@ -212,7 +214,12 @@ class Game:
 
 
             self.WINDOW.clearScreen()
+            self.PLAYER.adMove(KEYPRESSES)
+            self.ALIEN.enemieMovement((self.WINDOW.getVirtualWidth() - self.ALIEN.getWidth()),self.WINDOW.getVirtualHeight())
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
+            self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
+            self.WINDOW.getScreen().blit(self.ALIEN.getScreen(), self.ALIEN.getPOS())
+
             self.WINDOW.updateFrame()
 
     def runPhase2(self):

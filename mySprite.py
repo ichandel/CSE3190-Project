@@ -24,6 +24,8 @@ class MySprite:
         self.Y = 0
         self.POS = (self.X, self.Y)
         self.SPD = 5
+        self.MOVEMENTY = 50
+        self.MOVEMENTX = 2
 
     # Setters
 
@@ -59,6 +61,13 @@ class MySprite:
         if KEYPRESSES[pygame.K_s] == 1:
             self.Y += self.SPD
 
+        self.POS = (self.X, self.Y)
+    def adMove(self, KEYPRESSES):
+        # CHECK KEYPRESSES
+        if KEYPRESSES[pygame.K_d] == 1:
+            self.X = self.X + self.SPD
+        if KEYPRESSES[pygame.K_a] == 1:
+            self.X -= self.SPD
         self.POS = (self.X, self.Y)
 
     # Getters

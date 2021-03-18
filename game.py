@@ -214,8 +214,8 @@ class Game:
 
 
             self.WINDOW.clearScreen()
-            self.PLAYER.adMove(KEYPRESSES)
-            self.ALIEN.enemieMovement((self.WINDOW.getVirtualWidth() - self.ALIEN.getWidth()),self.WINDOW.getVirtualHeight())
+            self.PLAYER.adMove(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
+            self.ALIEN.enemieMovement((self.WINDOW.getVirtualWidth() - self.ALIEN.getWidth()-50),self.WINDOW.getVirtualHeight(),50)
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
             self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
             self.WINDOW.getScreen().blit(self.ALIEN.getScreen(), self.ALIEN.getPOS())

@@ -37,7 +37,7 @@ class ImageSprite(MySprite):
         self.checkBoundaries(MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH, MIN_HEIGHT)
         self.flipImageX(KEYPRESSES)
 
-    def enemieMovement(self,MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH = 0, MIN_HEIGHT =0):
+    def enemieMovement(self,MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH=0, MIN_HEIGHT=0):
         self.X += self.MOVEMENTX
         if self.X == MAX_WIDTH:
             self.Y += self.MOVEMENTY

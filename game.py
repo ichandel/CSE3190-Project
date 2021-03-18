@@ -17,8 +17,8 @@ class Game:
     pygame.init()
 
     def __init__(self):
-        self.WINDOW = Window()
-        self.WINDOW.setBackgroundImage(Image.BACKGROUND)
+        self.WINDOW = Window(WIDTH=1920, HEIGHT=1080, FPS=60)
+        self.WINDOW.setBackgroundColor(Colour.GREY)
         #self.PLAYER = ImageSprite(Image.PLAYER)
         #self.PLAYER.setScale(2)
         #self.PLAYER.setPOS((self.WINDOW.getVirtualWidth() - self.PLAYER.getWidth())//2, (self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight())//2)
@@ -51,39 +51,28 @@ class Game:
 
             # the following code creates, positions and blits on various text objects for user readability
 
-            self.TITLE = Text("Welcome To Brickbreaker :)!")
-            self.SUBTITLE = Text("Use the A and D keys to move your paddle.", FONTSIZE=20)
-            self.SUBTITLE4 = Text("The ball progressively gets faster with each hit!", FONTSIZE=20)
+            self.TITLE = Text("Welcome To Space Invaders!")
+            self.SUBTITLE = Text("Use the A and D keys to move your ship.", FONTSIZE=20)
+            self.SUBTITLE4 = Text("Press Space to Fire The Ship!", FONTSIZE=20)
             self.SUBTITLE5 = Text("Press enter to continue.", FONTSIZE=20)
             self.SUBTITLE6 = Text("Press ESC to exit.", FONTSIZE=20)
-            self.SUBTITLE9 = Text("What colour paddle would you like?", FONTSIZE=20)
-            self.OPT1 = Text("[1] Default: White", FONTSIZE=15)
-            self.OPT2 = Text("[2]: Grey", FONTSIZE=15)
-            self.OPT3 = Text("[3]: Red", FONTSIZE=15)
-            self.OPT4 = Text("[4]: Green", FONTSIZE=15)
-            self.OPT5 = Text("[5]: Magenta", FONTSIZE=15)
-            self.TITLE.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE.getWidth()) // 2,
-                              (self.WINDOW.getVirtualHeight() - self.TITLE.getHeight()) // 2 - 100)
-            self.SUBTITLE.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE.getWidth()) // 2,
-                                 (self.WINDOW.getVirtualHeight() - self.SUBTITLE.getHeight()) // 2 - 30)
-            self.SUBTITLE4.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE4.getWidth()) // 2,
-                                  (self.WINDOW.getVirtualHeight() - self.SUBTITLE4.getHeight()) // 2 + 0)
-            self.SUBTITLE5.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE5.getWidth()) // 2,
-                                  (self.WINDOW.getVirtualHeight() - self.SUBTITLE5.getHeight()) // 2 + 30)
-            self.SUBTITLE6.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE6.getWidth()) // 2,
-                                  (self.WINDOW.getVirtualHeight() - self.SUBTITLE6.getHeight()) // 2 + 60)
-            self.SUBTITLE9.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE9.getWidth()) // 2,
-                                  (self.WINDOW.getVirtualHeight() - self.SUBTITLE9.getHeight()) // 2 + 90)
-            self.OPT1.setPOS((self.WINDOW.getVirtualWidth() - self.OPT1.getWidth()) // 2,
-                             (self.WINDOW.getVirtualHeight() - self.OPT1.getHeight()) // 2 + 115)
-            self.OPT2.setPOS((self.WINDOW.getVirtualWidth() - self.OPT2.getWidth()) // 2,
-                             (self.WINDOW.getVirtualHeight() - self.OPT2.getHeight()) // 2 + 140)
-            self.OPT3.setPOS((self.WINDOW.getVirtualWidth() - self.OPT3.getWidth()) // 2,
-                             (self.WINDOW.getVirtualHeight() - self.OPT3.getHeight()) // 2 + 165)
-            self.OPT4.setPOS((self.WINDOW.getVirtualWidth() - self.OPT4.getWidth()) // 2,
-                             (self.WINDOW.getVirtualHeight() - self.OPT4.getHeight()) // 2 + 190)
-            self.OPT5.setPOS((self.WINDOW.getVirtualWidth() - self.OPT5.getWidth()) // 2,
-                             (self.WINDOW.getVirtualHeight() - self.OPT5.getHeight()) // 2 + 215)
+            self.SUBTITLE9 = Text("Which ship would you like to use?", FONTSIZE=20)
+            self.OPT1 = Text("[1] Default: ", FONTSIZE=15)
+            self.OPT2 = Text("[2]: ", FONTSIZE=15)
+            self.OPT3 = Text("[3]: ", FONTSIZE=15)
+            self.OPT4 = Text("[4]: ", FONTSIZE=15)
+            self.OPT5 = Text("[5]: ", FONTSIZE=15)
+            self.TITLE.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE.getHeight()) // 2 - 100)
+            self.SUBTITLE.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE.getHeight()) // 2 - 30)
+            self.SUBTITLE4.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE4.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE4.getHeight()) // 2 + 0)
+            self.SUBTITLE5.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE5.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE5.getHeight()) // 2 + 30)
+            self.SUBTITLE6.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE6.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE6.getHeight()) // 2 + 60)
+            self.SUBTITLE9.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE9.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE9.getHeight()) // 2 + 90)
+            self.OPT1.setPOS((self.WINDOW.getVirtualWidth() - self.OPT1.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT1.getHeight()) // 2 + 115)
+            self.OPT2.setPOS((self.WINDOW.getVirtualWidth() - self.OPT2.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT2.getHeight()) // 2 + 140)
+            self.OPT3.setPOS((self.WINDOW.getVirtualWidth() - self.OPT3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT3.getHeight()) // 2 + 165)
+            self.OPT4.setPOS((self.WINDOW.getVirtualWidth() - self.OPT4.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT4.getHeight()) // 2 + 190)
+            self.OPT5.setPOS((self.WINDOW.getVirtualWidth() - self.OPT5.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT5.getHeight()) // 2 + 215)
             self.WINDOW.getScreen().blit(self.TITLE.getScreen(), self.TITLE.getPOS())
             self.WINDOW.getScreen().blit(self.SUBTITLE.getScreen(), self.SUBTITLE.getPOS())
             self.WINDOW.getScreen().blit(self.SUBTITLE4.getScreen(), self.SUBTITLE4.getPOS())
@@ -132,12 +121,9 @@ class Game:
             self.TITLE2 = Text("Game Over!")
             self.SUBTITLE2 = Text("Press enter to play again.", FONTSIZE=20)
             self.SUBTITLE3 = Text("Press ESC to exit.", FONTSIZE=20)
-            self.TITLE2.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE2.getWidth()) // 2,
-                               (self.WINDOW.getVirtualHeight() - self.TITLE2.getHeight()) // 2 - 50)
-            self.SUBTITLE2.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE2.getWidth()) // 2,
-                                  (self.WINDOW.getVirtualHeight() - self.SUBTITLE2.getHeight()) // 2 + 20)
-            self.SUBTITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE3.getWidth()) // 2,
-                                  (self.WINDOW.getVirtualHeight() - self.SUBTITLE3.getHeight()) // 2 + 50)
+            self.TITLE2.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE2.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE2.getHeight()) // 2 - 50)
+            self.SUBTITLE2.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE2.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE2.getHeight()) // 2 + 20)
+            self.SUBTITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE3.getHeight()) // 2 + 50)
             self.WINDOW.getScreen().blit(self.TITLE2.getScreen(), self.TITLE2.getPOS())
             self.WINDOW.getScreen().blit(self.SUBTITLE2.getScreen(), self.SUBTITLE2.getPOS())
             self.WINDOW.getScreen().blit(self.SUBTITLE3.getScreen(), self.SUBTITLE3.getPOS())
@@ -162,12 +148,9 @@ class Game:
             self.TITLE3 = Text("Level One Complete!")
             self.SUBTITLE7 = Text("Press enter to continue to Level 2.", FONTSIZE=20)
             self.SUBTITLE3 = Text("Press ESC to exit.", FONTSIZE=20)
-            self.TITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE3.getWidth()) // 2,
-                               (self.WINDOW.getVirtualHeight() - self.TITLE3.getHeight()) // 2 - 50)
-            self.SUBTITLE7.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE7.getWidth()) // 2,
-                                  (self.WINDOW.getVirtualHeight() - self.SUBTITLE7.getHeight()) // 2 + 20)
-            self.SUBTITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE3.getWidth()) // 2,
-                                  (self.WINDOW.getVirtualHeight() - self.SUBTITLE3.getHeight()) // 2 + 50)
+            self.TITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE3.getHeight()) // 2 - 50)
+            self.SUBTITLE7.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE7.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE7.getHeight()) // 2 + 20)
+            self.SUBTITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE3.getHeight()) // 2 + 50)
             self.WINDOW.getScreen().blit(self.TITLE3.getScreen(), self.TITLE3.getPOS())
             self.WINDOW.getScreen().blit(self.SUBTITLE7.getScreen(), self.SUBTITLE7.getPOS())
             self.WINDOW.getScreen().blit(self.SUBTITLE3.getScreen(), self.SUBTITLE3.getPOS())
@@ -192,12 +175,9 @@ class Game:
             self.TITLE4 = Text("Game Complete!")
             self.SUBTITLE8 = Text("Press enter to play again.", FONTSIZE=20)
             self.SUBTITLE3 = Text("Press ESC to exit.", FONTSIZE=20)
-            self.TITLE4.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE4.getWidth()) // 2,
-                               (self.WINDOW.getVirtualHeight() - self.TITLE4.getHeight()) // 2 - 50)
-            self.SUBTITLE8.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE8.getWidth()) // 2,
-                                  (self.WINDOW.getVirtualHeight() - self.SUBTITLE8.getHeight()) // 2 + 20)
-            self.SUBTITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE3.getWidth()) // 2,
-                                  (self.WINDOW.getVirtualHeight() - self.SUBTITLE3.getHeight()) // 2 + 50)
+            self.TITLE4.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE4.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE4.getHeight()) // 2 - 50)
+            self.SUBTITLE8.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE8.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE8.getHeight()) // 2 + 20)
+            self.SUBTITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE3.getHeight()) // 2 + 50)
             self.WINDOW.getScreen().blit(self.TITLE4.getScreen(), self.TITLE4.getPOS())
             self.WINDOW.getScreen().blit(self.SUBTITLE8.getScreen(), self.SUBTITLE8.getPOS())
             self.WINDOW.getScreen().blit(self.SUBTITLE3.getScreen(), self.SUBTITLE3.getPOS())

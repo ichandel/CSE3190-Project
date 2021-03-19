@@ -1,12 +1,11 @@
 '''
-title: Image Sprites
+title: ememies class
 '''
 
-import pygame
 from mySprite import MySprite
+import pygame
 
-class ImageSprite(MySprite):
-
+class alien(MySprite):
     def __init__(self, IMAGE_FILE):
         super().__init__()
         self.FILE_LOCA = IMAGE_FILE
@@ -28,14 +27,6 @@ class ImageSprite(MySprite):
             self.SCREEN = pygame.transform.flip(self.SCREEN, True, False)
             self.X_FLIP = True
 
-    def wasdMove(self, KEYPRESSES):
-        super().wasdMove(KEYPRESSES)
-        self.flipImageX(KEYPRESSES)
-
-    def adMove(self, KEYPRESSES, MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH=0, MIN_HEIGHT=0):
-        super().adMove(KEYPRESSES)
-        self.checkBoundaries(MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH, MIN_HEIGHT)
-        self.flipImageX(KEYPRESSES)
 
     def enemyMovement(self,MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH=0, MIN_HEIGHT=0):
         self.X += self.MOVEMENTX
@@ -57,5 +48,3 @@ class ImageSprite(MySprite):
         elif self.Y < MIN_HEIGHT:
             self.Y = MIN_HEIGHT
         self.updatePOS()
-
-

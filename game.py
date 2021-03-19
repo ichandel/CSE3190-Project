@@ -9,7 +9,7 @@ from loader import Colour
 from window import Window
 from text import Text
 from imageSprite import ImageSprite
-from imageSprite import Enemies
+from enemies import alien
 import pygame
 
 class Game:
@@ -22,7 +22,7 @@ class Game:
         self.PLAYER = ImageSprite(Ships.SHIP1)
         self.PLAYER.setScale(1)
         self.PLAYER.setPOS(960,900)
-        self.ALIEN = Enemies(Ships.ALIEN_SHIP)
+        self.ALIEN = alien(Ships.ALIEN_SHIP)
         self.ALIEN.setScale(2)
         self.ALIEN.setPOS(120,102)
         self.SCORE = 0

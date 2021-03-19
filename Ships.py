@@ -5,7 +5,7 @@ title: Ships class
 import pygame
 from mySprite import MySprite
 
-class ships(MySprite):
+class Ships(MySprite):
 
     def __init__(self, IMAGE_FILE):
         super().__init__()

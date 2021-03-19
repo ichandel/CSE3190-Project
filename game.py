@@ -19,7 +19,7 @@ class Game:
     def __init__(self):
         self.WINDOW = Window(WIDTH=1920, HEIGHT=1080, FPS=60)
         self.WINDOW.setBackgroundColor(Colour.GREY)
-        self.PLAYER = Enemies(Ships.SHIP1)
+        self.PLAYER = ImageSprite(Ships.SHIP1)
         self.PLAYER.setScale(1)
         self.PLAYER.setPOS(960,900)
         self.ALIEN = Enemies(Ships.ALIEN_SHIP)

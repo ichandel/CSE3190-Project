@@ -9,8 +9,10 @@ from loader import Colour
 from window import Window
 from text import Text
 from imageSprite import ImageSprite
+from positionArrays import PositionArrays
+from bullets import Bullets
 from enemies import alien
-from Ships import Ships
+from ships import Ships
 import pygame
 
 class Game:
@@ -22,16 +24,29 @@ class Game:
         self.WINDOW.setBackgroundColor(Colour.GREY)
         self.PLAYER = Ships(imageShips.SHIP1)
         self.PLAYER.setScale(1)
-        self.PLAYER.setPOS(960,900)
+        self.PLAYER.setPOS(self.WINDOW.getVirtualWidth()//2, self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
         self.ALIEN = alien(imageShips.ALIEN_SHIP)
         self.ALIEN.setScale(2)
         self.ALIEN.setPOS(120,102)
+        self.POSITIONARRAYS = PositionArrays()
         self.SCORE = 0
         self.SCORE_TEXT = Text(f"Score: {self.SCORE}")
 
 
-    def placeItems(self):
-        pass
+    def placeAliensPhase1(self):
+        """
+        places all aliens for level 1
+        """
+        STARTX = 0
+        STARTY = 50
+        for i in range(7):
+            if STARTX < (self.WINDOW.getVirtualWidth() // 10) * 8:
+                STARTX = STARTX + self.WINDOW.getVirtualWidth() // 10
+            else:
+                STARTX = self.WINDOW.getVirtualWidth() // 10
+                STARTY = STARTY + 120
+            NEWALIEN = alien(imageShips.ALIEN_SHIP)
+            self.POSITIONARRAYS.COLUMN1.append(NEWALIEN)
 
     def getSpriteCollision(self, SPRITE1, SPRITE2):
         if pygame.Rect.colliderect(SPRITE1.getRect(), SPRITE2.getRect()):
@@ -199,6 +214,8 @@ class Game:
 
         self.SCORE = 0
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
+        self.placeAliensPhase1()
+
 
 
         while True:

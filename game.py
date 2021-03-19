@@ -10,6 +10,7 @@ from window import Window
 from text import Text
 from imageSprite import ImageSprite
 from enemies import alien
+from Ships import ships
 import pygame
 
 class Game:
@@ -19,7 +20,7 @@ class Game:
     def __init__(self):
         self.WINDOW = Window(WIDTH=1920, HEIGHT=1080, FPS=60)
         self.WINDOW.setBackgroundColor(Colour.GREY)
-        self.PLAYER = ImageSprite(Ships.SHIP1)
+        self.PLAYER = ships(Ships.SHIP1)
         self.PLAYER.setScale(1)
         self.PLAYER.setPOS(960,900)
         self.ALIEN = alien(Ships.ALIEN_SHIP)

@@ -26,6 +26,8 @@ class Colour:
     MEDIUM_AQUAMARINE = (102, 205, 170)
     DARK_CYAN = (0, 139, 139)
 
-class Ships:
+class imageShips:
     SHIP1 = "assets/fightership.png"
+    SHIP2 = "assets/fightership2.png"
+    SHIP3 = "assets/spaceshuttleinvaders.png"
     ALIEN_SHIP = "assets/alien ship(finished).png"

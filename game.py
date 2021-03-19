@@ -4,13 +4,13 @@ Author: Ishaan Chandel
 Date: 2021-03-04
 """
 
-from loader import Ships
+from loader import imageShips
 from loader import Colour
 from window import Window
 from text import Text
 from imageSprite import ImageSprite
 from enemies import alien
-from Ships import ships
+from Ships import Ships
 import pygame
 
 class Game:
@@ -20,10 +20,10 @@ class Game:
     def __init__(self):
         self.WINDOW = Window(WIDTH=1920, HEIGHT=1080, FPS=60)
         self.WINDOW.setBackgroundColor(Colour.GREY)
-        self.PLAYER = ships(Ships.SHIP1)
+        self.PLAYER = Ships(imageShips.SHIP1)
         self.PLAYER.setScale(1)
         self.PLAYER.setPOS(960,900)
-        self.ALIEN = alien(Ships.ALIEN_SHIP)
+        self.ALIEN = alien(imageShips.ALIEN_SHIP)
         self.ALIEN.setScale(2)
         self.ALIEN.setPOS(120,102)
         self.SCORE = 0

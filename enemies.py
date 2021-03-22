@@ -6,10 +6,12 @@ from mySprite import MySprite
 import pygame
 
 class alien(MySprite):
-    def __init__(self, IMAGE_FILE):
+    def __init__(self, IMAGE_FILE, X, Y):
         super().__init__()
         self.FILE_LOCA = IMAGE_FILE
         self.SCREEN = pygame.image.load(self.FILE_LOCA).convert_alpha()
+        self.X = X
+        self.Y = Y
         self.X_FLIP = False
 
     # --- MODIFIER METHODS --- #

@@ -25,10 +25,16 @@ class Game:
         self.PLAYER = Ships(imageShips.SHIP1)
         self.PLAYER.setScale(1)
         self.PLAYER.setPOS(self.WINDOW.getVirtualWidth()//2, self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
+        self.PLAYER2 = Ships(imageShips.SHIP2)
+        self.PLAYER2.setScale(1)
+        self.PLAYER2.setPOS(self.WINDOW.getVirtualWidth() // 2,self.WINDOW.getVirtualHeight() - self.PLAYER2.getHeight() - 50)
+        self.PLAYER3 = Ships(imageShips.SHIP3)
+        self.PLAYER3.setScale(2)
+        self.PLAYER3.setPOS(self.WINDOW.getVirtualWidth() // 2,self.WINDOW.getVirtualHeight() - self.PLAYER3.getHeight() - 50)
         self.ALIEN = alien(imageShips.ALIEN_SHIP)
         self.ALIEN.setScale(2)
         self.ALIEN.setPOS(120,102)
-        self.POSITIONARRAYS = PositionArrays()
+
         self.SCORE = 0
         self.SCORE_TEXT = Text(f"Score: {self.SCORE}")
 
@@ -46,7 +52,7 @@ class Game:
                 STARTX = self.WINDOW.getVirtualWidth() // 10
                 STARTY = STARTY + 120
             NEWALIEN = alien(imageShips.ALIEN_SHIP)
-            self.POSITIONARRAYS.COLUMN1.append(NEWALIEN)
+
 
     def getSpriteCollision(self, SPRITE1, SPRITE2):
         if pygame.Rect.colliderect(SPRITE1.getRect(), SPRITE2.getRect()):
@@ -88,10 +94,11 @@ class Game:
             self.SUBTITLE6.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE6.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE6.getHeight()) // 2 + 60)
             self.SUBTITLE9.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE9.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE9.getHeight()) // 2 + 90)
             self.OPT1.setPOS((self.WINDOW.getVirtualWidth() - self.OPT1.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT1.getHeight()) // 2 + 115)
-            self.OPT2.setPOS((self.WINDOW.getVirtualWidth() - self.OPT2.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT2.getHeight()) // 2 + 140)
-            self.OPT3.setPOS((self.WINDOW.getVirtualWidth() - self.OPT3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT3.getHeight()) // 2 + 165)
-            self.OPT4.setPOS((self.WINDOW.getVirtualWidth() - self.OPT4.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT4.getHeight()) // 2 + 190)
-            self.OPT5.setPOS((self.WINDOW.getVirtualWidth() - self.OPT5.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT5.getHeight()) // 2 + 215)
+            self.OPT2.setPOS((self.WINDOW.getVirtualWidth() - self.OPT2.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT2.getHeight()) // 2 + 250)
+            self.OPT3.setPOS((self.WINDOW.getVirtualWidth() - self.OPT3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT3.getHeight()) // 2 + 390)
+            self.PLAYER.setPOS((self.WINDOW.getVirtualWidth() - self.PLAYER.getWidth()) // 2 + 120, (self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight()) // 2 + 170)
+            self.PLAYER2.setPOS((self.WINDOW.getVirtualWidth() - self.PLAYER2.getWidth()) // 2 + 120, (self.WINDOW.getVirtualHeight() - self.PLAYER2.getHeight()) // 2 + 315)
+            self.PLAYER3.setPOS((self.WINDOW.getVirtualWidth() - self.PLAYER3.getWidth()) // 2 + 120, (self.WINDOW.getVirtualHeight() - self.PLAYER3.getHeight()) // 2 + 460)
             self.WINDOW.getScreen().blit(self.TITLE.getScreen(), self.TITLE.getPOS())
             self.WINDOW.getScreen().blit(self.SUBTITLE.getScreen(), self.SUBTITLE.getPOS())
             self.WINDOW.getScreen().blit(self.SUBTITLE4.getScreen(), self.SUBTITLE4.getPOS())
@@ -101,8 +108,9 @@ class Game:
             self.WINDOW.getScreen().blit(self.OPT1.getScreen(), self.OPT1.getPOS())
             self.WINDOW.getScreen().blit(self.OPT2.getScreen(), self.OPT2.getPOS())
             self.WINDOW.getScreen().blit(self.OPT3.getScreen(), self.OPT3.getPOS())
-            self.WINDOW.getScreen().blit(self.OPT4.getScreen(), self.OPT4.getPOS())
-            self.WINDOW.getScreen().blit(self.OPT5.getScreen(), self.OPT5.getPOS())
+            self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
+            self.WINDOW.getScreen().blit(self.PLAYER2.getScreen(), self.PLAYER2.getPOS())
+            self.WINDOW.getScreen().blit(self.PLAYER3.getScreen(), self.PLAYER3.getPOS())
 
             self.WINDOW.updateFrame()
 
@@ -215,7 +223,7 @@ class Game:
         self.SCORE = 0
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
         self.placeAliensPhase1()
-
+        self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2,self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
 
 
         while True:

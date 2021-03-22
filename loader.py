@@ -31,3 +31,4 @@ class imageShips:
     SHIP2 = "assets/fightership2.png"
     SHIP3 = "assets/spaceshuttleinvaders.png"
     ALIEN_SHIP = "assets/alien ship(finished).png"
+    UP_ARROW = "assets/arrow.png"

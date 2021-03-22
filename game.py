@@ -23,14 +23,12 @@ class Game:
         self.WINDOW = Window(WIDTH=1920, HEIGHT=1080, FPS=60)
         self.WINDOW.setBackgroundColor(Colour.GREY)
         self.PLAYER = Ships(imageShips.SHIP1)
-        self.PLAYER.setScale(1)
-        self.PLAYER.setPOS(self.WINDOW.getVirtualWidth()//2, self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
-        self.PLAYER2 = Ships(imageShips.SHIP2)
-        self.PLAYER2.setScale(1)
-        self.PLAYER2.setPOS(self.WINDOW.getVirtualWidth() // 2,self.WINDOW.getVirtualHeight() - self.PLAYER2.getHeight() - 50)
-        self.PLAYER3 = Ships(imageShips.SHIP3)
-        self.PLAYER3.setScale(2)
-        self.PLAYER3.setPOS(self.WINDOW.getVirtualWidth() // 2,self.WINDOW.getVirtualHeight() - self.PLAYER3.getHeight() - 50)
+        self.OPTPLAYER = Ships(imageShips.SHIP1)
+        self.OPTPLAYER.setScale(1)
+        self.OPTPLAYER2 = Ships(imageShips.SHIP2)
+        self.OPTPLAYER2.setScale(1)
+        self.OPTPLAYER3 = Ships(imageShips.SHIP3)
+        self.OPTPLAYER3.setScale(1.2)
         self.ALIEN = alien(imageShips.ALIEN_SHIP)
         self.ALIEN.setScale(2)
         self.ALIEN.setPOS(120,102)
@@ -87,18 +85,18 @@ class Game:
             self.OPT3 = Text("[3]: ", FONTSIZE=15)
             self.OPT4 = Text("[4]: ", FONTSIZE=15)
             self.OPT5 = Text("[5]: ", FONTSIZE=15)
-            self.TITLE.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE.getHeight()) // 2 - 100)
-            self.SUBTITLE.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE.getHeight()) // 2 - 30)
-            self.SUBTITLE4.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE4.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE4.getHeight()) // 2 + 0)
-            self.SUBTITLE5.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE5.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE5.getHeight()) // 2 + 30)
-            self.SUBTITLE6.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE6.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE6.getHeight()) // 2 + 60)
-            self.SUBTITLE9.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE9.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE9.getHeight()) // 2 + 90)
-            self.OPT1.setPOS((self.WINDOW.getVirtualWidth() - self.OPT1.getWidth()) // 2-300, (self.WINDOW.getVirtualHeight() - self.OPT1.getHeight()) // 2 + 115)
-            self.OPT2.setPOS((self.WINDOW.getVirtualWidth() - self.OPT2.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT2.getHeight()) // 2 + 115)
-            self.OPT3.setPOS((self.WINDOW.getVirtualWidth() - self.OPT3.getWidth()) // 2+300, (self.WINDOW.getVirtualHeight() - self.OPT3.getHeight()) // 2 + 115)
-            self.PLAYER.setPOS((self.WINDOW.getVirtualWidth() - self.PLAYER.getWidth()) // 2 - 300, (self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight()) // 2 + 225)
-            self.PLAYER2.setPOS((self.WINDOW.getVirtualWidth() - self.PLAYER2.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.PLAYER2.getHeight()) // 2 + 225)
-            self.PLAYER3.setPOS((self.WINDOW.getVirtualWidth() - self.PLAYER3.getWidth()) // 2 + 300, (self.WINDOW.getVirtualHeight() - self.PLAYER3.getHeight()) // 2 + 225)
+            self.TITLE.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE.getHeight()) // 2 - 200)
+            self.SUBTITLE.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE.getHeight()) // 2 - 130)
+            self.SUBTITLE4.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE4.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE4.getHeight()) // 2 - 100)
+            self.SUBTITLE5.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE5.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE5.getHeight()) // 2 - 70)
+            self.SUBTITLE6.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE6.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE6.getHeight()) // 2 - 40)
+            self.SUBTITLE9.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE9.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE9.getHeight()) // 2 - 10)
+            self.OPT1.setPOS((self.WINDOW.getVirtualWidth() - self.OPT1.getWidth()) // 2-300, (self.WINDOW.getVirtualHeight() - self.OPT1.getHeight()) // 2 + 15)
+            self.OPT2.setPOS((self.WINDOW.getVirtualWidth() - self.OPT2.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPT2.getHeight()) // 2 + 15)
+            self.OPT3.setPOS((self.WINDOW.getVirtualWidth() - self.OPT3.getWidth()) // 2+300, (self.WINDOW.getVirtualHeight() - self.OPT3.getHeight()) // 2 +15)
+            self.OPTPLAYER.setPOS((self.WINDOW.getVirtualWidth() - self.OPTPLAYER.getWidth()) // 2 - 300, (self.WINDOW.getVirtualHeight() - self.OPTPLAYER.getHeight()) // 2 + 125)
+            self.OPTPLAYER2.setPOS((self.WINDOW.getVirtualWidth() - self.OPTPLAYER2.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.OPTPLAYER2.getHeight()) // 2 + 125)
+            self.OPTPLAYER3.setPOS((self.WINDOW.getVirtualWidth() - self.OPTPLAYER3.getWidth()) // 2 + 300, (self.WINDOW.getVirtualHeight() - self.OPTPLAYER3.getHeight()) // 2 + 150)
             self.WINDOW.getScreen().blit(self.TITLE.getScreen(), self.TITLE.getPOS())
             self.WINDOW.getScreen().blit(self.SUBTITLE.getScreen(), self.SUBTITLE.getPOS())
             self.WINDOW.getScreen().blit(self.SUBTITLE4.getScreen(), self.SUBTITLE4.getPOS())
@@ -108,9 +106,9 @@ class Game:
             self.WINDOW.getScreen().blit(self.OPT1.getScreen(), self.OPT1.getPOS())
             self.WINDOW.getScreen().blit(self.OPT2.getScreen(), self.OPT2.getPOS())
             self.WINDOW.getScreen().blit(self.OPT3.getScreen(), self.OPT3.getPOS())
-            self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
-            self.WINDOW.getScreen().blit(self.PLAYER2.getScreen(), self.PLAYER2.getPOS())
-            self.WINDOW.getScreen().blit(self.PLAYER3.getScreen(), self.PLAYER3.getPOS())
+            self.WINDOW.getScreen().blit(self.OPTPLAYER.getScreen(), self.OPTPLAYER.getPOS())
+            self.WINDOW.getScreen().blit(self.OPTPLAYER2.getScreen(), self.OPTPLAYER2.getPOS())
+            self.WINDOW.getScreen().blit(self.OPTPLAYER3.getScreen(), self.OPTPLAYER3.getPOS())
 
             self.WINDOW.updateFrame()
 
@@ -119,15 +117,14 @@ class Game:
             # the following code allows the paddle object to change colour according to user needs
 
             if KEYPRESSES[pygame.K_1]:
-                pass
+                self.PLAYER = Ships(imageShips.SHIP1)
+                self.PLAYER.setScale(1)
             if KEYPRESSES[pygame.K_2]:
-                pass
+                self.PLAYER = Ships(imageShips.SHIP2)
+                self.PLAYER.setScale(1)
             if KEYPRESSES[pygame.K_3]:
-                pass
-            if KEYPRESSES[pygame.K_4]:
-                pass
-            if KEYPRESSES[pygame.K_5]:
-                pass
+                self.PLAYER = Ships(imageShips.SHIP3)
+                self.PLAYER.setScale(1.2)
 
             if KEYPRESSES[pygame.K_RETURN]:  # this line runs the main game once the user is ready
                 self.runPhase1()

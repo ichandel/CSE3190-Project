@@ -10,8 +10,8 @@ from window import Window
 from text import Text
 from imageSprite import ImageSprite
 from positionArrays import PositionArrays
-from bullets import Bullets
 from enemies import alien
+from bullet import bullets
 from ships import Ships
 import pygame
 
@@ -36,7 +36,8 @@ class Game:
         self.ARROW.setScale(4)
         self.SCORE = 0
         self.SCORE_TEXT = Text(f"Score: {self.SCORE}")
-
+        self.BULLET = bullets(imageShips.SHIP3)
+        self.BULLET.setPOS(2000,2000)
 
     def placeAliensPhase1(self):
         """
@@ -232,7 +233,6 @@ class Game:
         self.placeAliensPhase1()
         self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2,self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
 
-
         while True:
 
             self.WINDOW.setBackgroundColor(Colour.BLACK)
@@ -249,12 +249,16 @@ class Game:
             self.PLAYER.adMove(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
             #self.ALIEN.enemyMovement((self.WINDOW.getVirtualWidth() - self.ALIEN.getWidth() - 50), self.WINDOW.getVirtualHeight(), 50)
 
+            self.BULLET.bulletMovement()
+            self.BULLET.shooting(KEYPRESSES, self.PLAYER.X+(self.PLAYER.getWidth()//2)-self.BULLET.getWidth()//2, self.PLAYER.Y)
+            self.BULLET.updatePOS()
 
 
             self.WINDOW.clearScreen()
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
             self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
             #self.WINDOW.getScreen().blit(self.ALIEN.getScreen(), self.ALIEN.getPOS())
+            self.WINDOW.getScreen().blit(self.BULLET.getScreen(), self.BULLET.getPOS())
             self.WINDOW.updateFrame()
 
     def runPhase2(self):

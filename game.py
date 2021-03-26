@@ -37,7 +37,7 @@ class Game:
         self.SCORE = 0
         self.SCORE_TEXT = Text(f"Score: {self.SCORE}")
         self.BULLETS = []
-
+        self.presses = 0
 
     def placeAliensPhase1(self):
         """
@@ -250,17 +250,16 @@ class Game:
 
             self.PLAYER.adMove(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
             #self.ALIEN.enemyMovement((self.WINDOW.getVirtualWidth() - self.ALIEN.getWidth() - 50), self.WINDOW.getVirtualHeight(), 50)
-            presses = 0
 
             if KEYPRESSES[pygame.K_SPACE] == 1:
                 self.BULLETS.append(bullets(imageShips.BULLET))
-                self.BULLETS[presses].setScale(4)
-                self.BULLETS[presses].X = self.PLAYER.X+(self.PLAYER.getWidth()//2)-self.BULLETS[presses].getWidth()//2
-                self.BULLETS[presses].Y = self.PLAYER.Y
-                self.BULLETS[presses].updatePOS()
-                presses += 1
+                self.BULLETS[self.presses].setScale(4)
+                self.BULLETS[self.presses].X = self.PLAYER.X+(self.PLAYER.getWidth()//2)-self.BULLETS[self.presses].getWidth()//2
+                self.BULLETS[self.presses].Y = self.PLAYER.Y
+                self.BULLETS[self.presses].updatePOS()
+                self.presses += 1
 
-            for i in range(presses-1, -1, -1):
+            for i in range(self.presses-1, -1, -1):
                 self.BULLETS[i].bulletMovement()
                 self.BULLETS[i].updatePOS()
 

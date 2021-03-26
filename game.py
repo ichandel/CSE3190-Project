@@ -36,7 +36,8 @@ class Game:
         self.ARROW.setScale(4)
         self.SCORE = 0
         self.SCORE_TEXT = Text(f"Score: {self.SCORE}")
-        self.BULLET = bullets(imageShips.SHIP3)
+        self.BULLET = bullets(imageShips.BULLET)
+        self.BULLET.setScale(4)
         self.BULLET.setPOS(2000,2000)
 
     def placeAliensPhase1(self):

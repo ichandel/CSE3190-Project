@@ -9,7 +9,6 @@ from loader import Colour
 from window import Window
 from text import Text
 from imageSprite import ImageSprite
-from positionArrays import PositionArrays
 from enemies import alien
 from bullet import bullets
 from ships import Ships
@@ -29,31 +28,55 @@ class Game:
         self.OPTPLAYER2.setScale(1)
         self.OPTPLAYER3 = Ships(imageShips.SHIP3)
         self.OPTPLAYER3.setScale(1.2)
-        self.POSITIONARRAYS = PositionArrays()
         self.ALIEN = alien(imageShips.ALIEN_SHIP, 120, 102)
-        self.ALIEN.setScale(2)
+        self.ALIEN.setScale(1.8)
         self.ARROW = ImageSprite(imageShips.UP_ARROW)
         self.ARROW.setScale(4)
         self.SCORE = 0
         self.SCORE_TEXT = Text(f"Score: {self.SCORE}")
         self.BULLETS = []
         self.presses = 0
+        self.POSITIONARRAY1 = []
+        self.POSITIONARRAY2 = []
+        self.POSITIONARRAY3 = []
+        self.POSITIONARRAY4 = []
+        self.POSITIONARRAY5 = []
+        self.COLUMN1X = ((self.WINDOW.getVirtualWidth() // 6) * 1) - self.ALIEN.getWidth() // 2
+        self.COLUMN2X = ((self.WINDOW.getVirtualWidth() // 6) * 2) - self.ALIEN.getWidth() // 2
+        self.COLUMN3X = (self.WINDOW.getVirtualWidth() // 2) - self.ALIEN.getWidth() // 2
+        self.COLUMN4X = ((self.WINDOW.getVirtualWidth() // 6) * 4) - self.ALIEN.getWidth() // 2
+        self.COLUMN5X = ((self.WINDOW.getVirtualWidth() // 6) * 5) - self.ALIEN.getWidth() // 2
+        self.ROW1Y = (self.WINDOW.getVirtualHeight() // 12) * 1
+        self.ROW2Y = (self.WINDOW.getVirtualHeight() // 12) * 2
+        self.ROW3Y = (self.WINDOW.getVirtualHeight() // 12) * 3
+        self.ROW4Y = (self.WINDOW.getVirtualHeight() // 12) * 4
+        self.ROW5Y = (self.WINDOW.getVirtualHeight() // 12) * 5
+        self.ROWYVALUES = []
+        self.ROWYVALUES.append(self.ROW1Y)
+        self.ROWYVALUES.append(self.ROW2Y)
+        self.ROWYVALUES.append(self.ROW3Y)
+        self.ROWYVALUES.append(self.ROW4Y)
+        self.ROWYVALUES.append(self.ROW5Y)
 
-    def placeAliensPhase1(self):
+    def placeAliens(self):
         """
         places all aliens for level 1
         """
-        STARTX = 0
-        STARTY = 50
-        for j in range(6):
-            for i in range(5):
-                if STARTX < (self.WINDOW.getVirtualWidth() // 10) * 8:
-                    STARTX = STARTX + self.WINDOW.getVirtualWidth() // 10
-                else:
-                    STARTX = self.WINDOW.getVirtualWidth() // 10
-                    STARTY = STARTY + 120
-                NEWALIEN = alien(imageShips.ALIEN_SHIP, STARTX, STARTY)
-                #self.POSITIONARRAYS.COLUMNS[j][i].append(NEWALIEN)
+        for i in range(5):
+            self.POSITIONARRAY1.append(alien(imageShips.ALIEN_SHIP, self.COLUMN1X, self.ROWYVALUES[i]))
+            self.POSITIONARRAY1[i].setScale(1.8)
+        for i in range(5):
+            self.POSITIONARRAY2.append(alien(imageShips.ALIEN_SHIP, self.COLUMN2X, self.ROWYVALUES[i]))
+            self.POSITIONARRAY2[i].setScale(1.8)
+        for i in range(5):
+            self.POSITIONARRAY3.append(alien(imageShips.ALIEN_SHIP, self.COLUMN3X, self.ROWYVALUES[i]))
+            self.POSITIONARRAY3[i].setScale(1.8)
+        for i in range(5):
+            self.POSITIONARRAY4.append(alien(imageShips.ALIEN_SHIP, self.COLUMN4X, self.ROWYVALUES[i]))
+            self.POSITIONARRAY4[i].setScale(1.8)
+        for i in range(5):
+            self.POSITIONARRAY5.append(alien(imageShips.ALIEN_SHIP, self.COLUMN5X, self.ROWYVALUES[i]))
+            self.POSITIONARRAY5[i].setScale(1.8)
 
 
 
@@ -138,7 +161,7 @@ class Game:
 
 
             if KEYPRESSES[pygame.K_RETURN]:  # this line runs the main game once the user is ready
-                self.runPhase1()
+                self.run()
             if KEYPRESSES[pygame.K_ESCAPE]:  # this exits the program when the user wishes to
                 exit()
 
@@ -165,7 +188,7 @@ class Game:
             KEYPRESSES = pygame.key.get_pressed()
 
             if KEYPRESSES[pygame.K_RETURN]:
-                self.runPhase1()
+                self.run()
             if KEYPRESSES[pygame.K_ESCAPE]:
                 exit()
 
@@ -192,7 +215,7 @@ class Game:
             KEYPRESSES = pygame.key.get_pressed()
 
             if KEYPRESSES[pygame.K_RETURN]:
-                self.runPhase2()
+                self.bossTime()
             if KEYPRESSES[pygame.K_ESCAPE]:
                 exit()
 
@@ -219,19 +242,19 @@ class Game:
             KEYPRESSES = pygame.key.get_pressed()
 
             if KEYPRESSES[pygame.K_RETURN]:
-                self.runPhase1()
+                self.run()
             if KEYPRESSES[pygame.K_ESCAPE]:
                 exit()
 
-    def runPhase1(self):
+    def run(self):
         """
         contains code to create and run all of phase 1 and its roles
         """
 
         self.SCORE = 0
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
-        self.placeAliensPhase1()
-        self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2,self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
+        self.placeAliens()
+        self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.PLAYER.getWidth() // 2 ,self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
         NEWBULLET = bullets(imageShips.BULLET)
         NEWBULLET.setPOS(-1000, -1000)
 
@@ -249,7 +272,16 @@ class Game:
             KEYPRESSES = pygame.key.get_pressed()
 
             self.PLAYER.adMove(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
-            #self.ALIEN.enemyMovement((self.WINDOW.getVirtualWidth() - self.ALIEN.getWidth() - 50), self.WINDOW.getVirtualHeight(), 50)
+            for i in range(5):
+                self.POSITIONARRAY1[i].enemyMovement()
+            for i in range(5):
+                self.POSITIONARRAY2[i].enemyMovement()
+            for i in range(5):
+                self.POSITIONARRAY3[i].enemyMovement()
+            for i in range(5):
+                self.POSITIONARRAY4[i].enemyMovement()
+            for i in range(5):
+                self.POSITIONARRAY5[i].enemyMovement()
 
             if KEYPRESSES[pygame.K_SPACE] == 1:
                 self.BULLETS.append(bullets(imageShips.BULLET))
@@ -267,11 +299,24 @@ class Game:
             self.WINDOW.clearScreen()
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
             self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
-            #self.WINDOW.getScreen().blit(self.ALIEN.getScreen(), self.ALIEN.getPOS())
-            self.WINDOW.getScreen().blit(NEWBULLET.getScreen(), NEWBULLET.getPOS())
+
+            for i in range(5):
+                self.WINDOW.getScreen().blit(self.POSITIONARRAY1[i].getScreen(), self.POSITIONARRAY1[i].getPOS())
+            for i in range(5):
+                self.WINDOW.getScreen().blit(self.POSITIONARRAY2[i].getScreen(), self.POSITIONARRAY2[i].getPOS())
+            for i in range(5):
+                self.WINDOW.getScreen().blit(self.POSITIONARRAY3[i].getScreen(), self.POSITIONARRAY3[i].getPOS())
+            for i in range(5):
+                self.WINDOW.getScreen().blit(self.POSITIONARRAY4[i].getScreen(), self.POSITIONARRAY4[i].getPOS())
+            for i in range(5):
+                self.WINDOW.getScreen().blit(self.POSITIONARRAY5[i].getScreen(), self.POSITIONARRAY5[i].getPOS())
+
+            if self.presses >= 1:
+                for i in range(self.presses):
+                    self.WINDOW.getScreen().blit(self.BULLETS[self.presses-1].getScreen(), self.BULLETS[self.presses-1].getPOS())
             self.WINDOW.updateFrame()
 
-    def runPhase2(self):
+    def bossTime(self):
         """
         contains code to create and run all of phase 2 and its roles
         """

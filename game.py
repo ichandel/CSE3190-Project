@@ -36,9 +36,8 @@ class Game:
         self.ARROW.setScale(4)
         self.SCORE = 0
         self.SCORE_TEXT = Text(f"Score: {self.SCORE}")
-        self.BULLET = bullets(imageShips.BULLET)
-        self.BULLET.setScale(4)
-        self.BULLET.setPOS(2000,2000)
+        self.BULLETS = []
+
 
     def placeAliensPhase1(self):
         """
@@ -233,6 +232,8 @@ class Game:
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
         self.placeAliensPhase1()
         self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2,self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
+        NEWBULLET = bullets(imageShips.BULLET)
+        NEWBULLET.setPOS(-1000, -1000)
 
         while True:
 
@@ -249,17 +250,26 @@ class Game:
 
             self.PLAYER.adMove(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
             #self.ALIEN.enemyMovement((self.WINDOW.getVirtualWidth() - self.ALIEN.getWidth() - 50), self.WINDOW.getVirtualHeight(), 50)
+            presses = 0
 
-            self.BULLET.bulletMovement()
-            self.BULLET.shooting(KEYPRESSES, self.PLAYER.X+(self.PLAYER.getWidth()//2)-self.BULLET.getWidth()//2, self.PLAYER.Y)
-            self.BULLET.updatePOS()
+            if KEYPRESSES[pygame.K_SPACE] == 1:
+                self.BULLETS.append(bullets(imageShips.BULLET))
+                self.BULLETS[presses].setScale(4)
+                self.BULLETS[presses].X = self.PLAYER.X+(self.PLAYER.getWidth()//2)-self.BULLETS[presses].getWidth()//2
+                self.BULLETS[presses].Y = self.PLAYER.Y
+                self.BULLETS[presses].updatePOS()
+                presses += 1
+
+            for i in range(presses-1, -1, -1):
+                self.BULLETS[i].bulletMovement()
+                self.BULLETS[i].updatePOS()
 
 
             self.WINDOW.clearScreen()
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
             self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
             #self.WINDOW.getScreen().blit(self.ALIEN.getScreen(), self.ALIEN.getPOS())
-            self.WINDOW.getScreen().blit(self.BULLET.getScreen(), self.BULLET.getPOS())
+            self.WINDOW.getScreen().blit(NEWBULLET.getScreen(), NEWBULLET.getPOS())
             self.WINDOW.updateFrame()
 
     def runPhase2(self):

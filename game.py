@@ -34,6 +34,7 @@ class Game:
         self.ARROW.setScale(4)
         self.SCORE = 0
         self.SCORE_TEXT = Text(f"Score: {self.SCORE}")
+        self.BULLET = bullets(imageShips.BULLET, -1000, -1000, 0)
         self.BULLETS = []
         self.presses = 0
         self.POSITIONARRAY1 = []
@@ -57,6 +58,10 @@ class Game:
         self.ROWYVALUES.append(self.ROW3Y)
         self.ROWYVALUES.append(self.ROW4Y)
         self.ROWYVALUES.append(self.ROW5Y)
+        self.pressed = False
+        self.TIMER = pygame.time.Clock()
+        self.TIMER_MS = 0
+        self.TIME_LEFT = 15
 
     def placeAliens(self):
         """
@@ -85,6 +90,7 @@ class Game:
             return True
         else:
             return False
+
 
     def startScreen(self):
         """
@@ -251,12 +257,12 @@ class Game:
         contains code to create and run all of phase 1 and its roles
         """
 
+        global create
         self.SCORE = 0
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
         self.placeAliens()
         self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.PLAYER.getWidth() // 2 ,self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
-        NEWBULLET = bullets(imageShips.BULLET)
-        NEWBULLET.setPOS(-1000, -1000)
+
 
         while True:
 
@@ -283,20 +289,22 @@ class Game:
             for i in range(5):
                 self.POSITIONARRAY5[i].enemyMovement()
 
-            if KEYPRESSES[pygame.K_SPACE] == 1:
-                self.BULLETS.append(bullets(imageShips.BULLET))
-                self.BULLETS[self.presses].setScale(4)
-                self.BULLETS[self.presses].X = self.PLAYER.X+(self.PLAYER.getWidth()//2)-self.BULLETS[self.presses].getWidth()//2
-                self.BULLETS[self.presses].Y = self.PLAYER.Y
-                self.BULLETS[self.presses].updatePOS()
-                self.presses += 1
+            self.TIMER_MS += self.TIMER.tick()
+            if self.TIMER_MS > 1000:
+                if KEYPRESSES[pygame.K_SPACE] == 1:
+                    self.pressed = True
+                    self.BULLETS.append(bullets(imageShips.BULLET, (self.PLAYER.X + (self.PLAYER.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.PLAYER.Y, -1))
+                    self.BULLETS[-1].setScale(4)
+                    self.BULLETS[-1].updatePOS()
+                    self.TIMER_MS = 0
 
-            for i in range(self.presses-1, -1, -1):
+            for i in range(len(self.BULLETS)-1, -1, -1):
                 self.BULLETS[i].bulletMovement()
                 self.BULLETS[i].updatePOS()
 
-
             self.WINDOW.clearScreen()
+            for item in self.BULLETS:
+                self.WINDOW.getScreen().blit(item.getScreen(), item.getPOS())
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
             self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
 
@@ -311,9 +319,6 @@ class Game:
             for i in range(5):
                 self.WINDOW.getScreen().blit(self.POSITIONARRAY5[i].getScreen(), self.POSITIONARRAY5[i].getPOS())
 
-            if self.presses >= 1:
-                for i in range(self.presses):
-                    self.WINDOW.getScreen().blit(self.BULLETS[self.presses-1].getScreen(), self.BULLETS[self.presses-1].getPOS())
             self.WINDOW.updateFrame()
 
     def bossTime(self):

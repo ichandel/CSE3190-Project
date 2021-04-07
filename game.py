@@ -277,8 +277,8 @@ class Game:
             KEYPRESSES = pygame.key.get_pressed()
 
             self.PLAYER.adMove(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
-            for j in range(5):
-                for i in range(5):
+            for j in range(len(self.POSITIONARRAYS)):
+                for i in range(len(self.POSITIONARRAYS[j])):
                     self.POSITIONARRAYS[j][i].enemyMovement()
 
 
@@ -330,6 +330,15 @@ class Game:
                     self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
                     break
                     """
+            if self.pressed == True:
+                for j in range(5):
+                    for i in range(len(self.POSITIONARRAYS[j])):
+                        for k in range(len(self.BULLETS)-1, -1, -1):
+                            if self.getSpriteCollision(self.BULLETS[k], self.POSITIONARRAYS[j][i]):
+                                self.BULLETS.pop(k)
+                                self.POSITIONARRAYS[j].pop(i)
+                                self.SCORE += 10
+                                self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
 
             self.WINDOW.clearScreen()
             for item in self.BULLETS:
@@ -337,8 +346,8 @@ class Game:
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
             self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
 
-            for j in range(5):
-                for i in range(5):
+            for j in range(len(self.POSITIONARRAYS)):
+                for i in range(len(self.POSITIONARRAYS[j])):
                     self.WINDOW.getScreen().blit(self.POSITIONARRAYS[j][i].getScreen(), self.POSITIONARRAYS[j][i].getPOS())
 
 

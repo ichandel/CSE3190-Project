@@ -36,7 +36,6 @@ class Game:
         self.SCORE_TEXT = Text(f"Score: {self.SCORE}")
         self.BULLET = bullets(imageShips.BULLET, -1000, -1000, 0)
         self.BULLETS = []
-        self.presses = 0
         self.POSITIONARRAY1 = []
         self.POSITIONARRAY2 = []
         self.POSITIONARRAY3 = []
@@ -275,6 +274,8 @@ class Game:
 
             # Processing
 
+            TOTALALIENS = len(self.POSITIONARRAY1) + len(self.POSITIONARRAY2) + len(self.POSITIONARRAY3) + len(self.POSITIONARRAY4) + len(self.POSITIONARRAY5 )
+
             KEYPRESSES = pygame.key.get_pressed()
 
             self.PLAYER.adMove(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
@@ -289,6 +290,7 @@ class Game:
             for i in range(5):
                 self.POSITIONARRAY5[i].enemyMovement()
 
+
             self.TIMER_MS += self.TIMER.tick()
             if self.TIMER_MS > 1000:
                 if KEYPRESSES[pygame.K_SPACE] == 1:
@@ -301,6 +303,29 @@ class Game:
             for i in range(len(self.BULLETS)-1, -1, -1):
                 self.BULLETS[i].bulletMovement()
                 self.BULLETS[i].updatePOS()
+
+            """if TOTALALIENS > 0:
+                if pygame.Rect.colliderect(self.BALL.getRect(), self.BRICKS[i].TOP):  # checks for collision with top rect and so on
+                    self.BRICKS.pop(i)
+                    self.SCORE += 1
+                    self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
+                    break
+                elif pygame.Rect.colliderect(self.BALL.getRect(), self.BRICKS[i].BOTTOM):
+                    self.BRICKS.pop(i)
+                    self.SCORE += 1
+                    self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
+                    break
+                if pygame.Rect.colliderect(self.BALL.getRect(), self.BRICKS[i].LEFT):
+                    self.BRICKS.pop(i)
+                    self.SCORE += 1
+                    self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
+                    break
+                elif pygame.Rect.colliderect(self.BALL.getRect(), self.BRICKS[i].RIGHT):
+                    self.BRICKS.pop(i)
+                    self.SCORE += 1
+                    self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
+                    break
+                    """
 
             self.WINDOW.clearScreen()
             for item in self.BULLETS:

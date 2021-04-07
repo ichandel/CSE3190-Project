@@ -62,6 +62,7 @@ class MySprite:
             self.Y += self.SPD
 
         self.POS = (self.X, self.Y)
+
     def adMove(self, KEYPRESSES):
         # CHECK KEYPRESSES
         if KEYPRESSES[pygame.K_d] == 1:

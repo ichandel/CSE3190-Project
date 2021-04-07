@@ -282,9 +282,8 @@ class Game:
                     self.POSITIONARRAYS[j][i].enemyMovement()
 
 
-
             self.TIMER_MS += self.TIMER.tick()
-            if self.TIMER_MS > 1000:
+            if self.TIMER_MS > 1100:
                 if KEYPRESSES[pygame.K_SPACE] == 1:
                     self.pressed = True
                     self.BULLETS.append(bullets(imageShips.BULLET, (self.PLAYER.X + (self.PLAYER.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.PLAYER.Y, -1))
@@ -308,13 +307,17 @@ class Game:
                 self.ENEMYBULLETS[i].bulletMovement()
                 self.ENEMYBULLETS[i].updatePOS()
 
+            for i in range(len(self.BULLETS) - 1, -1, -1):
+                if self.BULLETS[i].X < (0 - self.BULLETS[i].getHeight()):
+                    self.BULLETS.pop(i)
+
             if TOTALALIENS > 0:
                 if self.pressed == True:
-                    for j in range(5):
-                        for i in range(len(self.POSITIONARRAYS[j])):
-                            for item in self.BULLETS:
-                                if self.getSpriteCollision(item, self.POSITIONARRAYS[j][i]):
-                                    self.BULLETS.pop(self.BULLETS.index(item))
+                    for j in range(len(self.POSITIONARRAYS) - 1, -1, -1):
+                        for i in range(len(self.POSITIONARRAYS[j]) - 1, -1, -1):
+                            for k in range(len(self.BULLETS)):
+                                if self.getSpriteCollision(self.BULLETS[k], self.POSITIONARRAYS[j][i]):
+                                    self.BULLETS.pop(k)
                                     self.POSITIONARRAYS[j].pop(i)
                                     self.SCORE += 10
                                     self.SCORE_TEXT.setText(f"Score: {self.SCORE}")

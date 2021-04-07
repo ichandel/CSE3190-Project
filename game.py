@@ -13,6 +13,7 @@ from enemies import alien
 from bullet import bullets
 from ships import Ships
 import pygame
+from random import randrange
 
 class Game:
 
@@ -36,11 +37,8 @@ class Game:
         self.SCORE_TEXT = Text(f"Score: {self.SCORE}")
         self.BULLET = bullets(imageShips.BULLET, -1000, -1000, 0)
         self.BULLETS = []
-        self.POSITIONARRAY1 = []
-        self.POSITIONARRAY2 = []
-        self.POSITIONARRAY3 = []
-        self.POSITIONARRAY4 = []
-        self.POSITIONARRAY5 = []
+        self.ENEMYBULLETS = []
+        self.POSITIONARRAYS = [[],[],[],[],[]]
         self.COLUMN1X = ((self.WINDOW.getVirtualWidth() // 6) * 1) - self.ALIEN.getWidth() // 2
         self.COLUMN2X = ((self.WINDOW.getVirtualWidth() // 6) * 2) - self.ALIEN.getWidth() // 2
         self.COLUMN3X = (self.WINDOW.getVirtualWidth() // 2) - self.ALIEN.getWidth() // 2
@@ -60,6 +58,7 @@ class Game:
         self.pressed = False
         self.TIMER = pygame.time.Clock()
         self.TIMER_MS = 0
+        self.TIMER_MS2 = 0
         self.TIME_LEFT = 15
 
     def placeAliens(self):
@@ -67,20 +66,20 @@ class Game:
         places all aliens for level 1
         """
         for i in range(5):
-            self.POSITIONARRAY1.append(alien(imageShips.ALIEN_SHIP, self.COLUMN1X, self.ROWYVALUES[i]))
-            self.POSITIONARRAY1[i].setScale(1.8)
+            self.POSITIONARRAYS[0].append(alien(imageShips.ALIEN_SHIP, self.COLUMN1X, self.ROWYVALUES[i]))
+            self.POSITIONARRAYS[0][i].setScale(1.8)
         for i in range(5):
-            self.POSITIONARRAY2.append(alien(imageShips.ALIEN_SHIP, self.COLUMN2X, self.ROWYVALUES[i]))
-            self.POSITIONARRAY2[i].setScale(1.8)
+            self.POSITIONARRAYS[1].append(alien(imageShips.ALIEN_SHIP, self.COLUMN2X, self.ROWYVALUES[i]))
+            self.POSITIONARRAYS[1][i].setScale(1.8)
         for i in range(5):
-            self.POSITIONARRAY3.append(alien(imageShips.ALIEN_SHIP, self.COLUMN3X, self.ROWYVALUES[i]))
-            self.POSITIONARRAY3[i].setScale(1.8)
+            self.POSITIONARRAYS[2].append(alien(imageShips.ALIEN_SHIP, self.COLUMN3X, self.ROWYVALUES[i]))
+            self.POSITIONARRAYS[2][i].setScale(1.8)
         for i in range(5):
-            self.POSITIONARRAY4.append(alien(imageShips.ALIEN_SHIP, self.COLUMN4X, self.ROWYVALUES[i]))
-            self.POSITIONARRAY4[i].setScale(1.8)
+            self.POSITIONARRAYS[3].append(alien(imageShips.ALIEN_SHIP, self.COLUMN4X, self.ROWYVALUES[i]))
+            self.POSITIONARRAYS[3][i].setScale(1.8)
         for i in range(5):
-            self.POSITIONARRAY5.append(alien(imageShips.ALIEN_SHIP, self.COLUMN5X, self.ROWYVALUES[i]))
-            self.POSITIONARRAY5[i].setScale(1.8)
+            self.POSITIONARRAYS[4].append(alien(imageShips.ALIEN_SHIP, self.COLUMN5X, self.ROWYVALUES[i]))
+            self.POSITIONARRAYS[4][i].setScale(1.8)
 
 
 
@@ -256,7 +255,6 @@ class Game:
         contains code to create and run all of phase 1 and its roles
         """
 
-        global create
         self.SCORE = 0
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
         self.placeAliens()
@@ -274,21 +272,15 @@ class Game:
 
             # Processing
 
-            TOTALALIENS = len(self.POSITIONARRAY1) + len(self.POSITIONARRAY2) + len(self.POSITIONARRAY3) + len(self.POSITIONARRAY4) + len(self.POSITIONARRAY5 )
+            TOTALALIENS = len(self.POSITIONARRAYS[0]) + len(self.POSITIONARRAYS[1]) + len(self.POSITIONARRAYS[2]) + len(self.POSITIONARRAYS[3]) + len(self.POSITIONARRAYS[4])
 
             KEYPRESSES = pygame.key.get_pressed()
 
             self.PLAYER.adMove(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
-            for i in range(5):
-                self.POSITIONARRAY1[i].enemyMovement()
-            for i in range(5):
-                self.POSITIONARRAY2[i].enemyMovement()
-            for i in range(5):
-                self.POSITIONARRAY3[i].enemyMovement()
-            for i in range(5):
-                self.POSITIONARRAY4[i].enemyMovement()
-            for i in range(5):
-                self.POSITIONARRAY5[i].enemyMovement()
+            for j in range(5):
+                for i in range(5):
+                    self.POSITIONARRAYS[j][i].enemyMovement()
+
 
 
             self.TIMER_MS += self.TIMER.tick()
@@ -300,9 +292,21 @@ class Game:
                     self.BULLETS[-1].updatePOS()
                     self.TIMER_MS = 0
 
+            self.TIMER_MS2 += self.TIMER.tick()
+            if self.TIMER_MS2 > 1000:
+                SHOOTVAR = randrange(0, 5)
+                self.ENEMYBULLETS.append(bullets(imageShips.BULLET, (self.PLAYER.X + (self.PLAYER.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.PLAYER.Y, 1))
+                self.ENEMYBULLETS[-1].setScale(4)
+                self.ENEMYBULLETS[-1].updatePOS()
+                self.TIMER_MS2 = 0
+
             for i in range(len(self.BULLETS)-1, -1, -1):
                 self.BULLETS[i].bulletMovement()
                 self.BULLETS[i].updatePOS()
+
+            for i in range(len(self.ENEMYBULLETS)-1, -1, -1):
+                self.ENEMYBULLETS[i].bulletMovement()
+                self.ENEMYBULLETS[i].updatePOS()
 
             """if TOTALALIENS > 0:
                 if pygame.Rect.colliderect(self.BALL.getRect(), self.BRICKS[i].TOP):  # checks for collision with top rect and so on
@@ -333,16 +337,10 @@ class Game:
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
             self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
 
-            for i in range(5):
-                self.WINDOW.getScreen().blit(self.POSITIONARRAY1[i].getScreen(), self.POSITIONARRAY1[i].getPOS())
-            for i in range(5):
-                self.WINDOW.getScreen().blit(self.POSITIONARRAY2[i].getScreen(), self.POSITIONARRAY2[i].getPOS())
-            for i in range(5):
-                self.WINDOW.getScreen().blit(self.POSITIONARRAY3[i].getScreen(), self.POSITIONARRAY3[i].getPOS())
-            for i in range(5):
-                self.WINDOW.getScreen().blit(self.POSITIONARRAY4[i].getScreen(), self.POSITIONARRAY4[i].getPOS())
-            for i in range(5):
-                self.WINDOW.getScreen().blit(self.POSITIONARRAY5[i].getScreen(), self.POSITIONARRAY5[i].getPOS())
+            for j in range(5):
+                for i in range(5):
+                    self.WINDOW.getScreen().blit(self.POSITIONARRAYS[j][i].getScreen(), self.POSITIONARRAYS[j][i].getPOS())
+
 
             self.WINDOW.updateFrame()
 

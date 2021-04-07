@@ -308,37 +308,16 @@ class Game:
                 self.ENEMYBULLETS[i].bulletMovement()
                 self.ENEMYBULLETS[i].updatePOS()
 
-            """if TOTALALIENS > 0:
-                if pygame.Rect.colliderect(self.BALL.getRect(), self.BRICKS[i].TOP):  # checks for collision with top rect and so on
-                    self.BRICKS.pop(i)
-                    self.SCORE += 1
-                    self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
-                    break
-                elif pygame.Rect.colliderect(self.BALL.getRect(), self.BRICKS[i].BOTTOM):
-                    self.BRICKS.pop(i)
-                    self.SCORE += 1
-                    self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
-                    break
-                if pygame.Rect.colliderect(self.BALL.getRect(), self.BRICKS[i].LEFT):
-                    self.BRICKS.pop(i)
-                    self.SCORE += 1
-                    self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
-                    break
-                elif pygame.Rect.colliderect(self.BALL.getRect(), self.BRICKS[i].RIGHT):
-                    self.BRICKS.pop(i)
-                    self.SCORE += 1
-                    self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
-                    break
-                    """
-            if self.pressed == True:
-                for j in range(5):
-                    for i in range(len(self.POSITIONARRAYS[j])):
-                        for item in self.BULLETS:
-                            if self.getSpriteCollision(item, self.POSITIONARRAYS[j][i]):
-                                self.BULLETS.pop(self.BULLETS.index(item))
-                                self.POSITIONARRAYS[j].pop(i)
-                                self.SCORE += 10
-                                self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
+            if TOTALALIENS > 0:
+                if self.pressed == True:
+                    for j in range(5):
+                        for i in range(len(self.POSITIONARRAYS[j])):
+                            for item in self.BULLETS:
+                                if self.getSpriteCollision(item, self.POSITIONARRAYS[j][i]):
+                                    self.BULLETS.pop(self.BULLETS.index(item))
+                                    self.POSITIONARRAYS[j].pop(i)
+                                    self.SCORE += 10
+                                    self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
 
             self.WINDOW.clearScreen()
             for item in self.BULLETS:

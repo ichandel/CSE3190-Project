@@ -333,9 +333,9 @@ class Game:
             if self.pressed == True:
                 for j in range(5):
                     for i in range(len(self.POSITIONARRAYS[j])):
-                        for k in range(len(self.BULLETS)-1, -1, -1):
-                            if self.getSpriteCollision(self.BULLETS[k], self.POSITIONARRAYS[j][i]):
-                                self.BULLETS.pop(k)
+                        for item in self.BULLETS:
+                            if self.getSpriteCollision(item, self.POSITIONARRAYS[j][i]):
+                                self.BULLETS.pop(self.BULLETS.index(item))
                                 self.POSITIONARRAYS[j].pop(i)
                                 self.SCORE += 10
                                 self.SCORE_TEXT.setText(f"Score: {self.SCORE}")

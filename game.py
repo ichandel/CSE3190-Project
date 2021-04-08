@@ -286,8 +286,7 @@ class Game:
             self.TIMER_MS += self.TIMER.tick()
             self.TIMER_MS1 += self.TIMER_MS
             self.TIMER_MS2 += self.TIMER_MS
-            print(self.TIMER_MS1)
-            if self.TIMER_MS1 > 10000:
+            if self.TIMER_MS1 > 20000:
                 if KEYPRESSES[pygame.K_SPACE] == 1:
                     self.pressed = True
                     self.BULLETS.append(bullets(imageShips.BULLET, (self.PLAYER.X + (self.PLAYER.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.PLAYER.Y, -1))
@@ -296,8 +295,10 @@ class Game:
                     self.TIMER_MS = 0
                     self.TIMER_MS1 = 0
 
-            if self.TIMER_MS2 > 10000:
+            if self.TIMER_MS2 > 35000:
                 SHOOTVAR = randrange(5)
+                while len(self.POSITIONARRAYS[SHOOTVAR]) <= 0:
+                    SHOOTVAR = randrange(5)
                 self.ENEMYBULLETS.append(bullets(imageShips.BULLET, (self.POSITIONARRAYS[SHOOTVAR][-1].X + (self.ALIEN.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.POSITIONARRAYS[SHOOTVAR][-1].Y + self.ALIEN.getHeight(), 1))
                 self.ENEMYBULLETS[-1].setScale(4)
                 self.ENEMYBULLETS[-1].updatePOS()
@@ -311,6 +312,7 @@ class Game:
                 self.BULLETS[i].updatePOS()
 
             for i in range(len(self.ENEMYBULLETS)-1, -1, -1):
+                self.ENEMYBULLETS[i].SPD = 5
                 self.ENEMYBULLETS[i].bulletMovement()
                 self.ENEMYBULLETS[i].updatePOS()
 
@@ -343,8 +345,6 @@ class Game:
             for j in range(len(self.POSITIONARRAYS)):
                 for i in range(len(self.POSITIONARRAYS[j])):
                     self.WINDOW.getScreen().blit(self.POSITIONARRAYS[j][i].getScreen(), self.POSITIONARRAYS[j][i].getPOS())
-
-
 
             self.WINDOW.updateFrame()
 

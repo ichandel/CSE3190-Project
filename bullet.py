@@ -13,7 +13,7 @@ class bullets(MySprite):
         self.X = X
         self.Y = Y
         self.DIR = DIR
-        self.Y += 10 * self.DIR
+        self.SPD = 10
 
     def setScale(self, SCALE_X, SCALE_Y=0):
         if SCALE_Y == 0:
@@ -21,7 +21,7 @@ class bullets(MySprite):
         self.SCREEN = pygame.transform.scale(self.SCREEN, (int(self.getWidth()//SCALE_X), int(self.getHeight()//SCALE_Y)))
 
     def bulletMovement(self):
-        self.Y += 10 * self.DIR
+        self.Y += self.SPD * self.DIR
 
 
 

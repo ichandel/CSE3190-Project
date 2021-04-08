@@ -60,6 +60,7 @@ class Game:
         self.TIMER = pygame.time.Clock()
         self.TIMER_MS = 0
         self.TIMER_MS1 = 0
+        self.TIMER_MS2  = 0
         self.TIME_LEFT = 30
 
     def placeAliens(self):
@@ -282,24 +283,27 @@ class Game:
                 for i in range(len(self.POSITIONARRAYS[j])):
                     self.POSITIONARRAYS[j][i].enemyMovement()
 
-
             self.TIMER_MS += self.TIMER.tick()
-
-            if self.TIMER_MS > 1100:
-                self.FIRE = True
+            self.TIMER_MS1 += self.TIMER_MS
+            self.TIMER_MS2 += self.TIMER_MS
+            print(self.TIMER_MS1)
+            if self.TIMER_MS1 > 10000:
                 if KEYPRESSES[pygame.K_SPACE] == 1:
                     self.pressed = True
                     self.BULLETS.append(bullets(imageShips.BULLET, (self.PLAYER.X + (self.PLAYER.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.PLAYER.Y, -1))
                     self.BULLETS[-1].setScale(4)
                     self.BULLETS[-1].updatePOS()
                     self.TIMER_MS = 0
+                    self.TIMER_MS1 = 0
 
-            if self.FIRE == True:
+            if self.TIMER_MS2 > 10000:
                 SHOOTVAR = randrange(5)
                 self.ENEMYBULLETS.append(bullets(imageShips.BULLET, (self.POSITIONARRAYS[SHOOTVAR][-1].X + (self.ALIEN.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.POSITIONARRAYS[SHOOTVAR][-1].Y + self.ALIEN.getHeight(), 1))
                 self.ENEMYBULLETS[-1].setScale(4)
                 self.ENEMYBULLETS[-1].updatePOS()
-                self.FIRE = False
+                self.TIMER_MS = 0
+                self.TIMER_MS2 = 0
+
 
 
             for i in range(len(self.BULLETS)-1, -1, -1):
@@ -318,9 +322,9 @@ class Game:
                 if self.pressed == True:
                     for j in range(len(self.POSITIONARRAYS) - 1, -1, -1):
                         for i in range(len(self.POSITIONARRAYS[j]) - 1, -1, -1):
-                            for k in range(len(self.BULLETS)):
-                                if self.getSpriteCollision(self.BULLETS[k], self.POSITIONARRAYS[j][i]):
-                                    self.BULLETS.pop(k)
+                            for item in (self.BULLETS):
+                                if self.getSpriteCollision(item, self.POSITIONARRAYS[j][i]):
+                                    self.BULLETS.pop(self.BULLETS.index(item))
                                     self.POSITIONARRAYS[j].pop(i)
                                     self.SCORE += 10
                                     self.SCORE_TEXT.setText(f"Score: {self.SCORE}")

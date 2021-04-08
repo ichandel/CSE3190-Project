@@ -4,7 +4,7 @@ Author: Ishaan Chandel
 Date: 2021-03-04
 """
 
-from loader import imageShips
+from loader import images
 from loader import Colour
 from window import Window
 from text import Text
@@ -22,20 +22,20 @@ class Game:
     def __init__(self):
         self.WINDOW = Window(WIDTH=1920, HEIGHT=1080, FPS=60)
         self.WINDOW.setBackgroundColor(Colour.GREY)
-        self.PLAYER = Ships(imageShips.SHIP1)
-        self.OPTPLAYER = Ships(imageShips.SHIP1)
+        self.PLAYER = Ships(images.SHIP1)
+        self.OPTPLAYER = Ships(images.SHIP1)
         self.OPTPLAYER.setScale(1)
-        self.OPTPLAYER2 = Ships(imageShips.SHIP2)
+        self.OPTPLAYER2 = Ships(images.SHIP2)
         self.OPTPLAYER2.setScale(1)
-        self.OPTPLAYER3 = Ships(imageShips.SHIP3)
+        self.OPTPLAYER3 = Ships(images.SHIP3)
         self.OPTPLAYER3.setScale(1.2)
-        self.ALIEN = alien(imageShips.ALIEN_SHIP, 120, 102)
+        self.ALIEN = alien(images.ALIEN_SHIP, 120, 102)
         self.ALIEN.setScale(1.8)
-        self.ARROW = ImageSprite(imageShips.UP_ARROW)
+        self.ARROW = ImageSprite(images.UP_ARROW)
         self.ARROW.setScale(4)
         self.SCORE = 0
         self.SCORE_TEXT = Text(f"Score: {self.SCORE}")
-        self.BULLET = bullets(imageShips.BULLET, -1000, -1000, 0)
+        self.BULLET = bullets(images.BULLET, -1000, -1000, 0)
         self.BULLETS = []
         self.ENEMYBULLETS = []
         self.POSITIONARRAYS = [[],[],[],[],[]]
@@ -68,19 +68,19 @@ class Game:
         places all aliens for level 1
         """
         for i in range(5):
-            self.POSITIONARRAYS[0].append(alien(imageShips.ALIEN_SHIP, self.COLUMN1X, self.ROWYVALUES[i]))
+            self.POSITIONARRAYS[0].append(alien(images.ALIEN_SHIP, self.COLUMN1X, self.ROWYVALUES[i]))
             self.POSITIONARRAYS[0][i].setScale(1.8)
         for i in range(5):
-            self.POSITIONARRAYS[1].append(alien(imageShips.ALIEN_SHIP, self.COLUMN2X, self.ROWYVALUES[i]))
+            self.POSITIONARRAYS[1].append(alien(images.ALIEN_SHIP, self.COLUMN2X, self.ROWYVALUES[i]))
             self.POSITIONARRAYS[1][i].setScale(1.8)
         for i in range(5):
-            self.POSITIONARRAYS[2].append(alien(imageShips.ALIEN_SHIP, self.COLUMN3X, self.ROWYVALUES[i]))
+            self.POSITIONARRAYS[2].append(alien(images.ALIEN_SHIP, self.COLUMN3X, self.ROWYVALUES[i]))
             self.POSITIONARRAYS[2][i].setScale(1.8)
         for i in range(5):
-            self.POSITIONARRAYS[3].append(alien(imageShips.ALIEN_SHIP, self.COLUMN4X, self.ROWYVALUES[i]))
+            self.POSITIONARRAYS[3].append(alien(images.ALIEN_SHIP, self.COLUMN4X, self.ROWYVALUES[i]))
             self.POSITIONARRAYS[3][i].setScale(1.8)
         for i in range(5):
-            self.POSITIONARRAYS[4].append(alien(imageShips.ALIEN_SHIP, self.COLUMN5X, self.ROWYVALUES[i]))
+            self.POSITIONARRAYS[4].append(alien(images.ALIEN_SHIP, self.COLUMN5X, self.ROWYVALUES[i]))
             self.POSITIONARRAYS[4][i].setScale(1.8)
 
 
@@ -151,15 +151,15 @@ class Game:
             # the following code allows the paddle object to change colour according to user needs
 
             if KEYPRESSES[pygame.K_1]:
-                self.PLAYER = Ships(imageShips.SHIP1)
+                self.PLAYER = Ships(images.SHIP1)
                 self.PLAYER.setScale(1)
                 self.ARROW.setPOS((self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2 - 300,(self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 275)
             if KEYPRESSES[pygame.K_2]:
-                self.PLAYER = Ships(imageShips.SHIP2)
+                self.PLAYER = Ships(images.SHIP2)
                 self.PLAYER.setScale(1)
                 self.ARROW.setPOS((self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2,(self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 275)
             if KEYPRESSES[pygame.K_3]:
-                self.PLAYER = Ships(imageShips.SHIP3)
+                self.PLAYER = Ships(images.SHIP3)
                 self.PLAYER.setScale(1.2)
                 self.ARROW.setPOS((self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2+300,(self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 325)
 
@@ -289,7 +289,7 @@ class Game:
             if self.TIMER_MS1 > 20000:
                 if KEYPRESSES[pygame.K_SPACE] == 1:
                     self.pressed = True
-                    self.BULLETS.append(bullets(imageShips.BULLET, (self.PLAYER.X + (self.PLAYER.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.PLAYER.Y, -1))
+                    self.BULLETS.append(bullets(images.BULLET, (self.PLAYER.X + (self.PLAYER.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.PLAYER.Y, -1))
                     self.BULLETS[-1].setScale(4)
                     self.BULLETS[-1].updatePOS()
                     self.TIMER_MS = 0
@@ -299,7 +299,7 @@ class Game:
                 SHOOTVAR = randrange(5)
                 while len(self.POSITIONARRAYS[SHOOTVAR]) <= 0:
                     SHOOTVAR = randrange(5)
-                self.ENEMYBULLETS.append(bullets(imageShips.BULLET, (self.POSITIONARRAYS[SHOOTVAR][-1].X + (self.ALIEN.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.POSITIONARRAYS[SHOOTVAR][-1].Y + self.ALIEN.getHeight(), 1))
+                self.ENEMYBULLETS.append(bullets(images.ENEMYBULLET, (self.POSITIONARRAYS[SHOOTVAR][-1].X + (self.ALIEN.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.POSITIONARRAYS[SHOOTVAR][-1].Y + self.ALIEN.getHeight(), 1))
                 self.ENEMYBULLETS[-1].setScale(4)
                 self.ENEMYBULLETS[-1].updatePOS()
                 self.TIMER_MS = 0

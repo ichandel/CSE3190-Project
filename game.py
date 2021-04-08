@@ -112,8 +112,8 @@ class Game:
             self.WINDOW.clearScreen()
             self.TITLE = Text("Welcome To Space Invaders!")
             self.SUBTITLE = Text("Use the A and D keys to move your ship.", FONTSIZE=20)
-            self.SUBTITLE4 = Text("Press Space to Fire The Ship!", FONTSIZE=20)
-            self.SUBTITLE5 = Text("Press enter to continue.", FONTSIZE=20)
+            self.SUBTITLE4 = Text("Press SPACE to Fire The Ship!", FONTSIZE=20)
+            self.SUBTITLE5 = Text("Press ENTER to continue.", FONTSIZE=20)
             self.SUBTITLE6 = Text("Press ESC to exit.", FONTSIZE=20)
             self.SUBTITLE9 = Text("Which ship would you like to use?", FONTSIZE=20)
             self.OPT1 = Text("[1] Default: ", FONTSIZE=15)
@@ -200,7 +200,7 @@ class Game:
     def pauseScreen(self):  # screen between levels to allow for a break
 
         self.TITLE3 = Text("Level One Complete!")
-        self.SUBTITLE7 = Text("Press enter to continue to Level 2.", FONTSIZE=20)
+        self.SUBTITLE7 = Text("Press ENTER to continue to Level 2.", FONTSIZE=20)
         self.SUBTITLE3 = Text("Press ESC to exit.", FONTSIZE=20)
         self.TITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE3.getHeight()) // 2 - 50)
         self.SUBTITLE7.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE7.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE7.getHeight()) // 2 + 20)
@@ -227,7 +227,7 @@ class Game:
     def winScreen(self):  # screen displayed after completing level 2
 
         self.TITLE4 = Text("Game Complete!")
-        self.SUBTITLE8 = Text("Press enter to play again.", FONTSIZE=20)
+        self.SUBTITLE8 = Text("Press SPACE to play again.", FONTSIZE=20)
         self.SUBTITLE3 = Text("Press ESC to exit.", FONTSIZE=20)
         self.TITLE4.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE4.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE4.getHeight()) // 2 - 50)
         self.SUBTITLE8.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE8.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE8.getHeight()) // 2 + 20)
@@ -246,8 +246,8 @@ class Game:
 
             KEYPRESSES = pygame.key.get_pressed()
 
-            if KEYPRESSES[pygame.K_RETURN]:
-                self.run()
+            if KEYPRESSES[pygame.K_SPACE]:
+                self.startScreen()
             if KEYPRESSES[pygame.K_ESCAPE]:
                 exit()
 

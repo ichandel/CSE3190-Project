@@ -173,7 +173,7 @@ class Game:
     def endScreen(self):
 
         self.TITLE2 = Text("Game Over!")
-        self.SUBTITLE2 = Text("Press enter to play again.", FONTSIZE=20)
+        self.SUBTITLE2 = Text("Press SPACE to play again.", FONTSIZE=20)
         self.SUBTITLE3 = Text("Press ESC to exit.", FONTSIZE=20)
         self.TITLE2.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE2.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE2.getHeight()) // 2 - 50)
         self.SUBTITLE2.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE2.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE2.getHeight()) // 2 + 20)
@@ -192,7 +192,7 @@ class Game:
 
             KEYPRESSES = pygame.key.get_pressed()
 
-            if KEYPRESSES[pygame.K_RETURN]:
+            if KEYPRESSES[pygame.K_SPACE]:
                 self.startScreen()
             if KEYPRESSES[pygame.K_ESCAPE]:
                 exit()

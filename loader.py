@@ -31,6 +31,6 @@ class images:
     SHIP2 = "assets/fightership2.png"
     SHIP3 = "assets/spaceshuttleinvaders.png"
     ALIEN_SHIP = "assets/alien ship(finished).png"
-    UP_ARROW = "assets/uparrow (1).png"
+    UP_ARROW = "assets/uparrow2.png"
     BULLET = "assets/clash.png"
     ENEMYBULLET = "assets/clash2.png"

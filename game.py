@@ -56,10 +56,11 @@ class Game:
         self.ROWYVALUES.append(self.ROW4Y)
         self.ROWYVALUES.append(self.ROW5Y)
         self.pressed = False
+        self.FIRE = False
         self.TIMER = pygame.time.Clock()
         self.TIMER_MS = 0
-        self.TIMER_MS2 = 0
-        self.TIME_LEFT = 15
+        self.TIMER_MS1 = 0
+        self.TIME_LEFT = 30
 
     def placeAliens(self):
         """
@@ -258,7 +259,7 @@ class Game:
         self.SCORE = 0
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
         self.placeAliens()
-        self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.PLAYER.getWidth() // 2 ,self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
+        self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.PLAYER.getWidth() // 2, self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
 
 
         while True:
@@ -283,7 +284,9 @@ class Game:
 
 
             self.TIMER_MS += self.TIMER.tick()
+
             if self.TIMER_MS > 1100:
+                self.FIRE = True
                 if KEYPRESSES[pygame.K_SPACE] == 1:
                     self.pressed = True
                     self.BULLETS.append(bullets(imageShips.BULLET, (self.PLAYER.X + (self.PLAYER.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.PLAYER.Y, -1))
@@ -291,13 +294,13 @@ class Game:
                     self.BULLETS[-1].updatePOS()
                     self.TIMER_MS = 0
 
-            self.TIMER_MS2 += self.TIMER.tick()
-            if self.TIMER_MS2 > 1000:
-                SHOOTVAR = randrange(0, 5)
-                self.ENEMYBULLETS.append(bullets(imageShips.BULLET, (self.PLAYER.X + (self.PLAYER.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.PLAYER.Y, 1))
+            if self.FIRE == True:
+                SHOOTVAR = randrange(5)
+                self.ENEMYBULLETS.append(bullets(imageShips.BULLET, (self.POSITIONARRAYS[SHOOTVAR][-1].X + (self.ALIEN.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.POSITIONARRAYS[SHOOTVAR][-1].Y + self.ALIEN.getHeight(), 1))
                 self.ENEMYBULLETS[-1].setScale(4)
                 self.ENEMYBULLETS[-1].updatePOS()
-                self.TIMER_MS2 = 0
+                self.FIRE = False
+
 
             for i in range(len(self.BULLETS)-1, -1, -1):
                 self.BULLETS[i].bulletMovement()
@@ -322,8 +325,13 @@ class Game:
                                     self.SCORE += 10
                                     self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
 
+            if TOTALALIENS == 0 and self.SCORE == 250:
+                self.pauseScreen()
+
             self.WINDOW.clearScreen()
             for item in self.BULLETS:
+                self.WINDOW.getScreen().blit(item.getScreen(), item.getPOS())
+            for item in self.ENEMYBULLETS:
                 self.WINDOW.getScreen().blit(item.getScreen(), item.getPOS())
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
             self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
@@ -331,6 +339,7 @@ class Game:
             for j in range(len(self.POSITIONARRAYS)):
                 for i in range(len(self.POSITIONARRAYS[j])):
                     self.WINDOW.getScreen().blit(self.POSITIONARRAYS[j][i].getScreen(), self.POSITIONARRAYS[j][i].getPOS())
+
 
 
             self.WINDOW.updateFrame()

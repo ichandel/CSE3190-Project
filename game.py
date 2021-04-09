@@ -57,6 +57,10 @@ class Game:
         self.ROWYVALUES.append(self.ROW5Y)
         self.pressed = False
         self.FIRE = False
+        self.CHANGEDBORDERLEFT = 0
+        self.CHANGEDBORDERRIGHT = 0
+        self.chngleftmultiplier = 0
+        self.checked = False
         self.TIMER = pygame.time.Clock()
         self.TIMER_MS1 = 400
         self.TIMER_MS2  = 300
@@ -89,6 +93,8 @@ class Game:
             return True
         else:
             return False
+
+
 
 
     def startScreen(self):
@@ -282,6 +288,30 @@ class Game:
             KEYPRESSES = pygame.key.get_pressed()
 
             self.PLAYER.adMove(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
+
+            if self.CHANGEDBORDERLEFT == 0:
+                if len(self.POSITIONARRAYS[0]) == 0:
+                    self.chngleftmultiplier += 1
+                    if len(self.POSITIONARRAYS[1]) == 0:
+                        self.chngleftmultiplier += 1
+                        if len(self.POSITIONARRAYS[2]) == 0:
+                            self.chngleftmultiplier += 1
+                            if len(self.POSITIONARRAYS[3]) == 0:
+                                self.chngleftmultiplier += 1
+                            else:
+                                self.checked = True
+                        else:
+                            self.checked = True
+                    else:
+                        self.checked = True
+
+                if self.checked == True:
+                    for j in range(len(self.POSITIONARRAYS) - 1, -1, -1):
+                        for i in range(len(self.POSITIONARRAYS[j])):
+                            self.POSITIONARRAYS[j][i].LEFTBORDER -= (((self.WINDOW.getVirtualWidth() // 6) * 1) - self.ALIEN.getWidth() // 2) * self.chngleftmultiplier
+                            self.CHANGEDBORDERLEFT = 1
+
+
             for j in range(len(self.POSITIONARRAYS)):
                 for i in range(len(self.POSITIONARRAYS[j])):
                     self.POSITIONARRAYS[j][i].enemyMovement()
@@ -305,8 +335,6 @@ class Game:
                 self.ENEMYBULLETS[-1].updatePOS()
                 self.TIMER_MS2 = 0
 
-
-
             for i in range(len(self.BULLETS)-1, -1, -1):
                 self.BULLETS[i].bulletMovement()
                 self.BULLETS[i].updatePOS()
@@ -321,7 +349,7 @@ class Game:
                     self.BULLETS.pop(i)
 
 
-            for item in (self.ENEMYBULLETS):
+            for item in self.ENEMYBULLETS:
                 if self.getSpriteCollision(item, self.PLAYER):
                     for item in self.BULLETS:
                         self.BULLETS.pop(self.BULLETS.index(item))

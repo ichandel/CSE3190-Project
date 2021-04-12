@@ -14,6 +14,7 @@ from bullet import bullets
 from ships import Ships
 import pygame
 from random import randrange
+from box import Box
 
 class Game:
 
@@ -65,6 +66,10 @@ class Game:
         self.TIMER_MS1 = 400
         self.TIMER_MS2  = 300
         self.TIME_LEFT = 30
+        self.STARS = []
+        for i in range(100):
+            SIZE = randrange(2, 10)
+            self.STARS.append(Box(SIZE, SIZE, randrange(self.WINDOW.getVirtualWidth()), randrange(self.WINDOW.getVirtualHeight())))
 
     def placeAliens(self):
         """
@@ -86,16 +91,11 @@ class Game:
             self.POSITIONARRAYS[4].append(alien(images.ALIEN_SHIP, self.COLUMN5X, self.ROWYVALUES[i]))
             self.POSITIONARRAYS[4][i].setScale(1.8)
 
-
-
     def getSpriteCollision(self, SPRITE1, SPRITE2):
         if pygame.Rect.colliderect(SPRITE1.getRect(), SPRITE2.getRect()):
             return True
         else:
             return False
-
-
-
 
     def startScreen(self):
         """
@@ -324,6 +324,13 @@ class Game:
             for i in range(len(self.BULLETS) - 1, -1, -1):
                 if self.BULLETS[i].X < (0 - self.BULLETS[i].getHeight()):
                     self.BULLETS.pop(i)
+
+
+            for item in self.ENEMYBULLETS:
+                for items in self.BULLETS:
+                    if self.getSpriteCollision(item, items):
+                        self.BULLETS.pop(self.BULLETS.index(items))
+                        self.ENEMYBULLETS.pop(self.ENEMYBULLETS.index(item))
 
 
             for item in self.ENEMYBULLETS:

@@ -36,9 +36,9 @@ class alien(MySprite):
     def enemyMovement(self):
         self.X += self.SPD
         if self.X == self.RIGHTBORDER:
-            self.Y += 20
+            self.Y += 50
             self.SPD = self.SPD*-1
         elif self.X == self.LEFTBORDER:
-            self.Y += 20
+            self.Y += 50
             self.SPD = self.SPD*-1
         self.updatePOS()

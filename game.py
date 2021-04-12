@@ -22,7 +22,7 @@ class Game:
 
     def __init__(self):
         self.WINDOW = Window(WIDTH=1920, HEIGHT=1080, FPS=60)
-        self.WINDOW.setBackgroundColor(Colour.GREY)
+        self.WINDOW.setBackgroundColor(Colour.BLACK)
         self.PLAYER = Ships(images.SHIP1)
         self.OPTPLAYER = Ships(images.SHIP1)
         self.OPTPLAYER.setScale(1)
@@ -152,6 +152,9 @@ class Game:
             self.WINDOW.getScreen().blit(self.OPTPLAYER2.getScreen(), self.OPTPLAYER2.getPOS())
             self.WINDOW.getScreen().blit(self.OPTPLAYER3.getScreen(), self.OPTPLAYER3.getPOS())
             self.WINDOW.getScreen().blit(self.ARROW.getScreen(), self.ARROW.getPOS())
+            for i in self.STARS:
+                self.WINDOW.getScreen().blit(i.getBox(), i.getPOS())
+
             # processing
             # the following code allows the paddle object to change colour according to user needs
 
@@ -167,6 +170,7 @@ class Game:
                 self.PLAYER = Ships(images.SHIP3)
                 self.PLAYER.setScale(1.2)
                 self.ARROW.setPOS((self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2+300,(self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 325)
+
 
             self.WINDOW.updateFrame()
 
@@ -187,6 +191,8 @@ class Game:
         self.WINDOW.getScreen().blit(self.TITLE2.getScreen(), self.TITLE2.getPOS())
         self.WINDOW.getScreen().blit(self.SUBTITLE2.getScreen(), self.SUBTITLE2.getPOS())
         self.WINDOW.getScreen().blit(self.SUBTITLE3.getScreen(), self.SUBTITLE3.getPOS())
+        for i in self.STARS:
+            self.WINDOW.getScreen().blit(i.getBox(), i.getPOS())
         self.WINDOW.updateFrame()
 
         while True:
@@ -214,6 +220,8 @@ class Game:
         self.WINDOW.getScreen().blit(self.TITLE3.getScreen(), self.TITLE3.getPOS())
         self.WINDOW.getScreen().blit(self.SUBTITLE7.getScreen(), self.SUBTITLE7.getPOS())
         self.WINDOW.getScreen().blit(self.SUBTITLE3.getScreen(), self.SUBTITLE3.getPOS())
+        for i in self.STARS:
+            self.WINDOW.getScreen().blit(i.getBox(), i.getPOS())
         self.WINDOW.updateFrame()
 
         while True:
@@ -241,6 +249,8 @@ class Game:
         self.WINDOW.getScreen().blit(self.TITLE4.getScreen(), self.TITLE4.getPOS())
         self.WINDOW.getScreen().blit(self.SUBTITLE8.getScreen(), self.SUBTITLE8.getPOS())
         self.WINDOW.getScreen().blit(self.SUBTITLE3.getScreen(), self.SUBTITLE3.getPOS())
+        for i in self.STARS:
+            self.WINDOW.getScreen().blit(i.getBox(), i.getPOS())
         self.WINDOW.updateFrame()
 
         while True:
@@ -332,6 +342,9 @@ class Game:
                         self.BULLETS.pop(self.BULLETS.index(items))
                         self.ENEMYBULLETS.pop(self.ENEMYBULLETS.index(item))
 
+            for i in self.STARS:
+                i.moveBoxWrap(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
+
 
             for item in self.ENEMYBULLETS:
                 if self.getSpriteCollision(item, self.PLAYER):
@@ -411,6 +424,8 @@ class Game:
                 self.pauseScreen()
 
             self.WINDOW.clearScreen()
+            for i in self.STARS:
+                self.WINDOW.getScreen().blit(i.getBox(), i.getPOS())
             for item in self.BULLETS:
                 self.WINDOW.getScreen().blit(item.getScreen(), item.getPOS())
             for item in self.ENEMYBULLETS:
@@ -440,6 +455,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
+
             KEYPRESSES = pygame.key.get_pressed()
             self.PLAYER.adMove(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
 
@@ -457,13 +473,15 @@ class Game:
             for i in range(len(self.BULLETS)-1, -1, -1):
                 self.BULLETS[i].bulletMovement()
                 self.BULLETS[i].updatePOS()
-            # Processing
 
-            KEYPRESSES = pygame.key.get_pressed()
+            for i in self.STARS:
+                i.moveBoxWrap(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
 
             self.WINDOW.clearScreen()
             for item in self.BULLETS:
                 self.WINDOW.getScreen().blit(item.getScreen(), item.getPOS())
+            for i in self.STARS:
+                self.WINDOW.getScreen().blit(i.getBox(), i.getPOS())
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
             self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
             self.WINDOW.getScreen().blit(self.ALIEN.getScreen(), self.ALIEN.getPOS())

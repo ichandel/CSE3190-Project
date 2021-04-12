@@ -29,10 +29,10 @@ class Box:
     def moveBox(self, KEYPRESSES):
         # CHECK KEYPRESSES
         if KEYPRESSES[pygame.K_d] == 1:
-            self.X = self.X + self.SPD
+            self.X = self.X + 1
         if KEYPRESSES[pygame.K_a] == 1:
-            self.X -= self.SPD
-        self.Y += self.SPD
+            self.X -= 1
+        self.Y += 3
 
         self.POS = (self.X, self.Y)
 

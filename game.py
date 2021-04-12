@@ -172,7 +172,7 @@ class Game:
 
 
             if KEYPRESSES[pygame.K_RETURN]:  # this line runs the main game once the user is ready
-                self.bossTime()
+                self.run()
             if KEYPRESSES[pygame.K_ESCAPE]:  # this exits the program when the user wishes to
                 exit()
 
@@ -367,9 +367,10 @@ class Game:
                             for i in range(len(self.POSITIONARRAYS[4]) - 1, -1, -1):
                                 self.POSITIONARRAYS[4].pop(i)
                             self.endScreen()
+
             for j in range(len(self.POSITIONARRAYS) - 1, -1, -1):
                 for i in range(len(self.POSITIONARRAYS[j]) - 1, -1, -1):
-                    if self.POSITIONARRAYS[j][i].Y > self.WINDOW.getVirtualHeight()- self.POSITIONARRAYS[j][i].getHeight():
+                    if self.POSITIONARRAYS[j][i].Y > self.PLAYER.Y:
                         for item in self.BULLETS:
                             self.BULLETS.pop(self.BULLETS.index(item))
                         for item in self.ENEMYBULLETS:

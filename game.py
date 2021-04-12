@@ -289,29 +289,6 @@ class Game:
 
             self.PLAYER.adMove(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
 
-            if self.CHANGEDBORDERLEFT == 0:
-                if len(self.POSITIONARRAYS[0]) == 0:
-                    self.chngleftmultiplier += 1
-                    if len(self.POSITIONARRAYS[1]) == 0:
-                        self.chngleftmultiplier += 1
-                        if len(self.POSITIONARRAYS[2]) == 0:
-                            self.chngleftmultiplier += 1
-                            if len(self.POSITIONARRAYS[3]) == 0:
-                                self.chngleftmultiplier += 1
-                            else:
-                                self.checked = True
-                        else:
-                            self.checked = True
-                    else:
-                        self.checked = True
-
-                if self.checked == True:
-                    for j in range(len(self.POSITIONARRAYS) - 1, -1, -1):
-                        for i in range(len(self.POSITIONARRAYS[j])):
-                            self.POSITIONARRAYS[j][i].LEFTBORDER -= (((self.WINDOW.getVirtualWidth() // 6) * 1) - self.ALIEN.getWidth() // 2) * self.chngleftmultiplier
-                            self.CHANGEDBORDERLEFT = 1
-
-
             for j in range(len(self.POSITIONARRAYS)):
                 for i in range(len(self.POSITIONARRAYS[j])):
                     self.POSITIONARRAYS[j][i].enemyMovement()

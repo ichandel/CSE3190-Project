@@ -172,7 +172,7 @@ class Game:
 
 
             if KEYPRESSES[pygame.K_RETURN]:  # this line runs the main game once the user is ready
-                self.run()
+                self.bossTime()
             if KEYPRESSES[pygame.K_ESCAPE]:  # this exits the program when the user wishes to
                 exit()
 
@@ -447,6 +447,8 @@ class Game:
         self.SCORE = 0
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
         self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.PLAYER.getWidth() // 2,self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
+        self.ALIEN.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.ALIEN.getWidth() // 2 - 220, self.WINDOW.getVirtualHeight() - self.ALIEN.getHeight() - 900)
+        self.ALIEN.setScale(0.2)
         while True:
             # Inputs
             for event in pygame.event.get():
@@ -479,6 +481,7 @@ class Game:
                 self.WINDOW.getScreen().blit(item.getScreen(), item.getPOS())
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
             self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
+            self.WINDOW.getScreen().blit(self.ALIEN.getScreen(), self.ALIEN.getPOS())
             self.WINDOW.updateFrame()
 
 

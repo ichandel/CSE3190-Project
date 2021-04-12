@@ -87,12 +87,27 @@ class Box:
         self.Y = Y
         self.updatePOS()
 
+    def setScaleX (self, SCALE_X):
+        self.SCREEN = pygame.transform.scale(self.SCREEN, (int(self.getWidth()-SCALE_X), int(self.getHeight())))
+
     # --- ACCESSOR METHODS (GETTER) --- #
     def getBox(self):
         return self.SCREEN
 
     def getPOS(self):
         return self.POS
+
+    def getX(self):
+        return self.X
+
+    def getY(self):
+        return self.Y
+
+    def getWidth(self):
+        return self.SCREEN.get_rect().width
+
+    def getHeight(self):
+        return self.SCREEN.get_rect().height
 
 
 if __name__ == "__main__":

@@ -30,7 +30,7 @@ class Game:
         self.OPTPLAYER2.setScale(1)
         self.OPTPLAYER3 = Ships(images.SHIP3)
         self.OPTPLAYER3.setScale(1.2)
-        self.ALIEN = alien(images.ALIEN_SHIP, 120, 102)
+        self.ALIEN = alien(images.ALIEN_SHIP, -1000, -1000)
         self.ALIEN.setScale(1.8)
         self.ARROW = ImageSprite(images.UP_ARROW)
         self.ARROW.setScale(4)
@@ -117,7 +117,7 @@ class Game:
         # the following code creates, positions and blits on various text objects for user readability
 
             self.WINDOW.clearScreen()
-            self.TITLE = Text("Welcome To Space Invaders!")
+            self.TITLE = Text("Welcome To Galactic Raiders!")
             self.SUBTITLE = Text("Use the A and D keys to move your ship.", FONTSIZE=20)
             self.SUBTITLE4 = Text("Press SPACE to Fire The Ship!", FONTSIZE=20)
             self.SUBTITLE5 = Text("Press ENTER to continue.", FONTSIZE=20)
@@ -183,9 +183,9 @@ class Game:
 
     def endScreen(self):
 
-        self.TITLE2 = Text("Game Over!")
-        self.SUBTITLE2 = Text("Press SPACE to play again.", FONTSIZE=20)
-        self.SUBTITLE3 = Text("Press ESC to exit.", FONTSIZE=20)
+        self.TITLE2 = Text("The Raiders Took Down Your Ship!")
+        self.SUBTITLE2 = Text("Press LSHIFT to try and stop them again.", FONTSIZE=20)
+        self.SUBTITLE3 = Text("Press ESC to give up.", FONTSIZE=20)
         self.TITLE2.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE2.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE2.getHeight()) // 2 - 50)
         self.SUBTITLE2.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE2.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE2.getHeight()) // 2 + 20)
         self.SUBTITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE3.getHeight()) // 2 + 50)
@@ -205,22 +205,19 @@ class Game:
 
             KEYPRESSES = pygame.key.get_pressed()
 
-            if KEYPRESSES[pygame.K_SPACE]:
+            if KEYPRESSES[pygame.K_LSHIFT]:
                 self.startScreen()
             if KEYPRESSES[pygame.K_ESCAPE]:
                 exit()
 
-    def pauseScreen(self):  # screen between levels to allow for a break
+    def breakScreen(self):  # screen between levels to allow for a break
 
-        self.TITLE3 = Text("Level One Complete!")
-        self.SUBTITLE7 = Text("Press ENTER to continue to Level 2.", FONTSIZE=20)
-        self.SUBTITLE3 = Text("Press ESC to exit.", FONTSIZE=20)
+        self.TITLE3 = Text("You Defeated The Raiders! Uh oh, looks like the Mothership is coming!")
+        self.SUBTITLE7 = Text("Press ENTER to continue to face the Mothership.", FONTSIZE=20)
         self.TITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE3.getHeight()) // 2 - 50)
         self.SUBTITLE7.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE7.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE7.getHeight()) // 2 + 20)
-        self.SUBTITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE3.getHeight()) // 2 + 50)
         self.WINDOW.getScreen().blit(self.TITLE3.getScreen(), self.TITLE3.getPOS())
         self.WINDOW.getScreen().blit(self.SUBTITLE7.getScreen(), self.SUBTITLE7.getPOS())
-        self.WINDOW.getScreen().blit(self.SUBTITLE3.getScreen(), self.SUBTITLE3.getPOS())
         for i in self.STARS:
             self.WINDOW.getScreen().blit(i.getBox(), i.getPOS())
         self.WINDOW.updateFrame()
@@ -236,13 +233,12 @@ class Game:
 
             if KEYPRESSES[pygame.K_RETURN]:
                 self.bossTime()
-            if KEYPRESSES[pygame.K_ESCAPE]:
-                exit()
 
     def winScreen(self):  # screen displayed after completing level 2
 
-        self.TITLE4 = Text("Game Complete!")
-        self.SUBTITLE8 = Text("Press SPACE to play again.", FONTSIZE=20)
+        self.WINDOW.clearScreen()
+        self.TITLE4 = Text("You Defeated All The Raiders!")
+        self.SUBTITLE8 = Text("Press LSHIFT to play again.", FONTSIZE=20)
         self.SUBTITLE3 = Text("Press ESC to exit.", FONTSIZE=20)
         self.TITLE4.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE4.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE4.getHeight()) // 2 - 50)
         self.SUBTITLE8.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE8.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE8.getHeight()) // 2 + 20)
@@ -250,8 +246,15 @@ class Game:
         self.WINDOW.getScreen().blit(self.TITLE4.getScreen(), self.TITLE4.getPOS())
         self.WINDOW.getScreen().blit(self.SUBTITLE8.getScreen(), self.SUBTITLE8.getPOS())
         self.WINDOW.getScreen().blit(self.SUBTITLE3.getScreen(), self.SUBTITLE3.getPOS())
+        self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
         for i in self.STARS:
             self.WINDOW.getScreen().blit(i.getBox(), i.getPOS())
+        self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
+        self.WINDOW.getScreen().blit(self.BAR.getBox(), self.BAR.getPOS())
+        self.WINDOW.getScreen().blit(self.BARTOP.getBox(), self.BARTOP.getPOS())
+        self.WINDOW.getScreen().blit(self.BARBOT.getBox(), self.BARBOT.getPOS())
+        self.WINDOW.getScreen().blit(self.BARLFT.getBox(), self.BARLFT.getPOS())
+        self.WINDOW.getScreen().blit(self.BARRGT.getBox(), self.BARRGT.getPOS())
         self.WINDOW.updateFrame()
 
         while True:
@@ -263,7 +266,7 @@ class Game:
 
             KEYPRESSES = pygame.key.get_pressed()
 
-            if KEYPRESSES[pygame.K_SPACE]:
+            if KEYPRESSES[pygame.K_LSHIFT]:
                 self.startScreen()
             if KEYPRESSES[pygame.K_ESCAPE]:
                 exit()
@@ -422,7 +425,7 @@ class Game:
                                     self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
 
             if TOTALALIENS == 0 and self.SCORE == 250:
-                self.pauseScreen()
+                self.breakScreen()
 
             self.WINDOW.clearScreen()
             for i in self.STARS:
@@ -447,11 +450,23 @@ class Game:
 
         self.SCORE = 0
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
-        self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.PLAYER.getWidth() // 2,self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
-        self.ALIEN.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.ALIEN.getWidth() // 2 - 220, self.WINDOW.getVirtualHeight() - self.ALIEN.getHeight() - 900)
-        self.ALIEN.setScale(0.2)
-        self.BAR = Box(self.BARLENGTH,25)
-        self.BAR.setPOS(500,500)
+        self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.PLAYER.getWidth() // 2, self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
+        self.BOSS = alien(images.ALIEN_SHIP, -1000, -1000)
+        self.BOSS.setScale(1.8)
+        self.BOSS.setScale(0.2)
+        self.BOSS.setPOS((self.WINDOW.getVirtualWidth() // 2) - (self.BOSS.getWidth() // 2), 100)
+        BOSSHEALTH = 200
+        self.BARTOP = Box(1010, 1)
+        self.BARBOT = Box(1010, 1)
+        self.BARLFT = Box(1, 40)
+        self.BARRGT = Box(1, 40)
+        self.BAR = Box(1000, 25, COLOR=Colour.RED)
+        self.BAR.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.BAR.getWidth() // 2, 17)
+        self.BARTOP.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.BARTOP.getWidth() // 2, 10)
+        self.BARBOT.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.BARBOT.getWidth() // 2, 49)
+        self.BARLFT.setPOS((self.WINDOW.getVirtualWidth() // 2 - self.BARTOP.getWidth() // 2) - 1, 10)
+        self.BARRGT.setPOS(self.WINDOW.getVirtualWidth() // 2 + self.BARTOP.getWidth() // 2, 10)
+
         while True:
             # Inputs
             for event in pygame.event.get():
@@ -482,10 +497,34 @@ class Game:
 
 
             for items in self.BULLETS:
-                if self.getSpriteCollision(self.ALIEN, items):
+                if self.getSpriteCollision(self.BOSS, items):
                     self.BULLETS.pop(self.BULLETS.index(items))
-                    self.BAR.WIDTH -= 200
+                    self.BAR.setScaleX(50)
+                    BOSSHEALTH -= 10
                     self.BAR.updateDimension()
+
+            if BOSSHEALTH <= 0:
+                self.SCORE += 300
+                self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
+                for item in self.BULLETS:
+                    self.BULLETS.pop(self.BULLETS.index(item))
+                for item in self.ENEMYBULLETS:
+                    self.ENEMYBULLETS.pop(self.ENEMYBULLETS.index(item))
+
+                for i in range(len(self.POSITIONARRAYS[0]) - 1, -1, -1):
+                    self.POSITIONARRAYS[0].pop(i)
+                for i in range(len(self.POSITIONARRAYS[1]) - 1, -1, -1):
+                    self.POSITIONARRAYS[1].pop(i)
+                for i in range(len(self.POSITIONARRAYS[2]) - 1, -1, -1):
+                    self.POSITIONARRAYS[2].pop(i)
+                for i in range(len(self.POSITIONARRAYS[3]) - 1, -1, -1):
+                    self.POSITIONARRAYS[3].pop(i)
+                for i in range(len(self.POSITIONARRAYS[4]) - 1, -1, -1):
+                    self.POSITIONARRAYS[4].pop(i)
+                self.winScreen()
+
+
+
             self.WINDOW.clearScreen()
             for item in self.BULLETS:
                 self.WINDOW.getScreen().blit(item.getScreen(), item.getPOS())
@@ -493,8 +532,12 @@ class Game:
                 self.WINDOW.getScreen().blit(i.getBox(), i.getPOS())
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
             self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
-            self.WINDOW.getScreen().blit(self.ALIEN.getScreen(), self.ALIEN.getPOS())
+            self.WINDOW.getScreen().blit(self.BOSS.getScreen(), self.BOSS.getPOS())
             self.WINDOW.getScreen().blit(self.BAR.getBox(), self.BAR.getPOS())
+            self.WINDOW.getScreen().blit(self.BARTOP.getBox(), self.BARTOP.getPOS())
+            self.WINDOW.getScreen().blit(self.BARBOT.getBox(), self.BARBOT.getPOS())
+            self.WINDOW.getScreen().blit(self.BARLFT.getBox(), self.BARLFT.getPOS())
+            self.WINDOW.getScreen().blit(self.BARRGT.getBox(), self.BARRGT.getPOS())
             self.WINDOW.updateFrame()
 
 
@@ -502,4 +545,4 @@ class Game:
 if __name__ == "__main__":
     GAME = Game()
 
-    GAME.bossTime()
+    GAME.startScreen()

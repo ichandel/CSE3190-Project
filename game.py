@@ -352,10 +352,10 @@ class Game:
 
             for item in self.ENEMYBULLETS:
                 if self.getSpriteCollision(item, self.PLAYER):
-                    for item in self.BULLETS:
-                        self.BULLETS.pop(self.BULLETS.index(item))
-                    for item in self.ENEMYBULLETS:
-                        self.ENEMYBULLETS.pop(self.ENEMYBULLETS.index(item))
+                    for i in range(len(self.BULLETS)-1, -1, -1):
+                        self.BULLETS.pop(i)
+                    for i in range(len(self.ENEMYBULLETS)-1, -1, -1):
+                        self.ENEMYBULLETS.pop(i)
 
                     for i in range(len(self.POSITIONARRAYS[0]) -1, -1, -1):
                         self.POSITIONARRAYS[0].pop(i)
@@ -375,10 +375,10 @@ class Game:
             for j in range(len(self.POSITIONARRAYS) - 1, -1, -1):
                 for i in range(len(self.POSITIONARRAYS[j]) - 1, -1, -1):
                         if self.getSpriteCollision(self.PLAYER, self.POSITIONARRAYS[j][i]):
-                            for item in self.BULLETS:
-                                self.BULLETS.pop(self.BULLETS.index(item))
-                            for item in self.ENEMYBULLETS:
-                                self.ENEMYBULLETS.pop(self.ENEMYBULLETS.index(item))
+                            for i in range(len(self.BULLETS) - 1, -1, -1):
+                                self.BULLETS.pop(i)
+                            for i in range(len(self.ENEMYBULLETS) - 1, -1, -1):
+                                self.ENEMYBULLETS.pop(i)
 
                             for i in range(len(self.POSITIONARRAYS[0]) - 1, -1, -1):
                                 self.POSITIONARRAYS[0].pop(i)
@@ -395,10 +395,10 @@ class Game:
             for j in range(len(self.POSITIONARRAYS) - 1, -1, -1):
                 for i in range(len(self.POSITIONARRAYS[j]) - 1, -1, -1):
                     if self.POSITIONARRAYS[j][i].Y > self.PLAYER.Y:
-                        for item in self.BULLETS:
-                            self.BULLETS.pop(self.BULLETS.index(item))
-                        for item in self.ENEMYBULLETS:
-                            self.ENEMYBULLETS.pop(self.ENEMYBULLETS.index(item))
+                        for i in range(len(self.BULLETS) - 1, -1, -1):
+                            self.BULLETS.pop(i)
+                        for i in range(len(self.ENEMYBULLETS) - 1, -1, -1):
+                            self.ENEMYBULLETS.pop(i)
 
                         for i in range(len(self.POSITIONARRAYS[0]) - 1, -1, -1):
                             self.POSITIONARRAYS[0].pop(i)
@@ -506,10 +506,10 @@ class Game:
             if BOSSHEALTH <= 0:
                 self.SCORE += 300
                 self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
-                for item in self.BULLETS:
-                    self.BULLETS.pop(self.BULLETS.index(item))
-                for item in self.ENEMYBULLETS:
-                    self.ENEMYBULLETS.pop(self.ENEMYBULLETS.index(item))
+                for i in range(len(self.BULLETS) - 1, -1, -1):
+                    self.BULLETS.pop(i)
+                for i in range(len(self.ENEMYBULLETS) - 1, -1, -1):
+                    self.ENEMYBULLETS.pop(i)
 
                 for i in range(len(self.POSITIONARRAYS[0]) - 1, -1, -1):
                     self.POSITIONARRAYS[0].pop(i)

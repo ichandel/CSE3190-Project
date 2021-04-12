@@ -70,6 +70,7 @@ class Game:
         for i in range(100):
             SIZE = randrange(2, 10)
             self.STARS.append(Box(SIZE, SIZE, randrange(self.WINDOW.getVirtualWidth()), randrange(self.WINDOW.getVirtualHeight())))
+        self.BARLENGTH = 200
 
     def placeAliens(self):
         """
@@ -449,6 +450,8 @@ class Game:
         self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.PLAYER.getWidth() // 2,self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
         self.ALIEN.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.ALIEN.getWidth() // 2 - 220, self.WINDOW.getVirtualHeight() - self.ALIEN.getHeight() - 900)
         self.ALIEN.setScale(0.2)
+        self.BAR = Box(self.BARLENGTH,25)
+        self.BAR.setPOS(500,500)
         while True:
             # Inputs
             for event in pygame.event.get():
@@ -477,6 +480,12 @@ class Game:
             for i in self.STARS:
                 i.moveBoxWrap(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
 
+
+            for items in self.BULLETS:
+                if self.getSpriteCollision(self.ALIEN, items):
+                    self.BULLETS.pop(self.BULLETS.index(items))
+                    self.BAR.WIDTH -= 200
+                    self.BAR.updateDimension()
             self.WINDOW.clearScreen()
             for item in self.BULLETS:
                 self.WINDOW.getScreen().blit(item.getScreen(), item.getPOS())
@@ -485,6 +494,7 @@ class Game:
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
             self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
             self.WINDOW.getScreen().blit(self.ALIEN.getScreen(), self.ALIEN.getPOS())
+            self.WINDOW.getScreen().blit(self.BAR.getBox(), self.BAR.getPOS())
             self.WINDOW.updateFrame()
 
 
@@ -492,4 +502,4 @@ class Game:
 if __name__ == "__main__":
     GAME = Game()
 
-    GAME.startScreen()
+    GAME.bossTime()

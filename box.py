@@ -66,12 +66,34 @@ class Box:
         self.moveBox(KEYPRESSES)
         self.checkBoundaries(MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH, MIN_HEIGHT)
 
+    def updateDimension(self):
+        """
+        a method used to update the width and height after a change has been made
+        :return: none
+        """
+        self.DIMENSION = (self.WIDTH, self.HEIGHT)
+
+    def updatePOS(self):
+        self.POS = (self.X, self.Y)
+
+    def setPOS(self, X, Y):
+        """
+        a setter method used to change the location of a sprite on screen
+        :param X: int
+        :param Y: int
+        :return: none
+        """
+        self.X = X
+        self.Y = Y
+        self.updatePOS()
+
     # --- ACCESSOR METHODS (GETTER) --- #
     def getBox(self):
         return self.SCREEN
 
     def getPOS(self):
         return self.POS
+
 
 if __name__ == "__main__":
     import sys

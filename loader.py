@@ -27,6 +27,8 @@ class Colour:
     DARK_CYAN = (0, 139, 139)
 
 class images:
+    FAKESHIP = "assets/mspaintalien.png"
+    MOTHERSHIP = "assets/mothership.png"
     SHIP1 = "assets/fightership.png"
     SHIP2 = "assets/fightership2.png"
     SHIP3 = "assets/spaceshuttleinvaders.png"

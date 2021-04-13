@@ -452,9 +452,7 @@ class Game:
 
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
         self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.PLAYER.getWidth() // 2, self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
-        self.BOSS = alien(images.ALIEN_SHIP, -1000, -1000)
-        self.BOSS.setScale(1.8)
-        self.BOSS.setScale(0.2)
+        self.BOSS = alien(images.MOTHERSHIP, -1000, -1000)
         self.BOSS.setPOS((self.WINDOW.getVirtualWidth() // 2) - (self.BOSS.getWidth() // 2), 100)
         BOSSHEALTH = 200
         self.BARTOP = Box(1010, 1)

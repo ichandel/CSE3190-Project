@@ -334,11 +334,11 @@ class Game:
                 self.ENEMYBULLETS[i].updatePOS()
 
             for i in range(len(self.BULLETS) - 1, -1, -1):
-                if self.BULLETS[i].X < (0 - self.BULLETS[i].getHeight()):
+                if self.BULLETS[i].Y < (0 - self.BULLETS[i].getHeight()):
                     self.BULLETS.pop(i)
 
             for i in range(len(self.ENEMYBULLETS) - 1, -1, -1):
-                if self.ENEMYBULLETS[i].X > (self.WINDOW.getVirtualHeight() + self.ENEMYBULLETS[i].getHeight()):
+                if self.ENEMYBULLETS[i].Y > (self.WINDOW.getVirtualHeight() + self.ENEMYBULLETS[i].getHeight()):
                     self.ENEMYBULLETS.pop(i)
 
 
@@ -493,7 +493,7 @@ class Game:
                 SHOOTVAR = randrange(3)
                 if SHOOTVAR == 0:
                     for i in range(16):
-                        self.ENEMYBULLETS.append(bullets(images.ENEMYBULLET, (25 * i + (10*i)), -50, 1))
+                        self.ENEMYBULLETS.append(bullets(images.ENEMYBULLET, (25 * i + (10*i)), 0 - self.BULLET.getHeight(), 1))
                         self.ENEMYBULLETS[-1].setScale(4)
                         self.ENEMYBULLETS[-1].updatePOS()
                     self.TIMER_MS2 = 0
@@ -523,11 +523,11 @@ class Game:
                 i.moveBoxWrap(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
 
             for i in range(len(self.BULLETS) - 1, -1, -1):
-                if self.BULLETS[i].X < (0 - self.BULLETS[i].getHeight()):
+                if self.BULLETS[i].Y < (0 - self.BULLET.getHeight()):
                     self.BULLETS.pop(i)
 
             for i in range(len(self.ENEMYBULLETS) - 1, -1, -1):
-                if self.ENEMYBULLETS[i].X > (self.WINDOW.getVirtualHeight() + self.ENEMYBULLETS[i].getHeight()):
+                if self.ENEMYBULLETS[i].Y > (self.WINDOW.getVirtualHeight() + self.BULLET.getHeight()):
                     self.ENEMYBULLETS.pop(i)
 
 

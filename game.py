@@ -105,6 +105,9 @@ class Game:
 
         self.ARROW.setPOS((self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2 - 300, (self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 275)
 
+        self.SCORE = 0
+        self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
+
         while True:
             # Inputs
             for event in pygame.event.get():
@@ -171,10 +174,7 @@ class Game:
                 self.PLAYER = Ships(images.SHIP3)
                 self.PLAYER.setScale(1.2)
                 self.ARROW.setPOS((self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2+300,(self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 325)
-
-
             self.WINDOW.updateFrame()
-
 
             if KEYPRESSES[pygame.K_RETURN]:  # this line runs the main game once the user is ready
                 self.run()
@@ -216,12 +216,8 @@ class Game:
         self.SUBTITLE7 = Text("Press ENTER to continue to face the Mothership.", FONTSIZE=20)
         self.TITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE3.getHeight()) // 2 - 50)
         self.SUBTITLE7.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE7.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE7.getHeight()) // 2 + 20)
-        self.SUBTITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE3.getHeight()) // 2 + 50)
         self.WINDOW.getScreen().blit(self.TITLE3.getScreen(), self.TITLE3.getPOS())
         self.WINDOW.getScreen().blit(self.SUBTITLE7.getScreen(), self.SUBTITLE7.getPOS())
-        self.WINDOW.getScreen().blit(self.SUBTITLE3.getScreen(), self.SUBTITLE3.getPOS())
-        for i in self.STARS:
-            self.WINDOW.getScreen().blit(i.getBox(), i.getPOS())
         self.WINDOW.updateFrame()
 
         while True:
@@ -341,12 +337,18 @@ class Game:
                 if self.BULLETS[i].X < (0 - self.BULLETS[i].getHeight()):
                     self.BULLETS.pop(i)
 
+            for i in range(len(self.ENEMYBULLETS) - 1, -1, -1):
+                if self.ENEMYBULLETS[i].X > (self.WINDOW.getVirtualHeight() + self.ENEMYBULLETS[i].getHeight()):
+                    self.ENEMYBULLETS.pop(i)
+
 
             for item in self.ENEMYBULLETS:
                 for items in self.BULLETS:
                     if self.getSpriteCollision(item, items):
                         self.BULLETS.pop(self.BULLETS.index(items))
                         self.ENEMYBULLETS.pop(self.ENEMYBULLETS.index(item))
+                        self.SCORE += 5
+                        self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
 
             for i in self.STARS:
                 i.moveBoxWrap(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
@@ -426,8 +428,8 @@ class Game:
                                     self.SCORE += 10
                                     self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
 
-            if TOTALALIENS == 0 and self.SCORE == 250:
-                self.bossTime()
+            if TOTALALIENS == 0:
+                self.breakScreen()
 
             self.WINDOW.clearScreen()
             for i in self.STARS:
@@ -488,22 +490,45 @@ class Game:
                     self.TIMER_MS1 = 0
 
             if self.TIMER_MS2 > 500:
-                self.ENEMYBULLETS.append(bullets(images.ENEMYBULLET, (self.BOSS.X + (self.BOSS.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.BOSS.Y + self.BOSS.getHeight(), 1))
-                self.ENEMYBULLETS[-1].setScale(4)
-                self.ENEMYBULLETS[-1].updatePOS()
-                self.TIMER_MS2 = 0
+                SHOOTVAR = randrange(3)
+                if SHOOTVAR == 0:
+                    for i in range(16):
+                        self.ENEMYBULLETS.append(bullets(images.ENEMYBULLET, (25 * i + (10*i)), -50, 1))
+                        self.ENEMYBULLETS[-1].setScale(4)
+                        self.ENEMYBULLETS[-1].updatePOS()
+                    self.TIMER_MS2 = 0
+                if SHOOTVAR == 1:
+                    for i in range(16):
+                        self.ENEMYBULLETS.append(bullets(images.ENEMYBULLET, self.WINDOW.getVirtualWidth() - ((25*(i+1)) + (10*i)), 0 - self.BULLET.getHeight(), 1))
+                        self.ENEMYBULLETS[-1].setScale(4)
+                        self.ENEMYBULLETS[-1].updatePOS()
+                    self.TIMER_MS2 = 0
+                if SHOOTVAR == 2:
+                    for i in range(20):
+                        self.ENEMYBULLETS.append(bullets(images.ENEMYBULLET, 615 + (25 * i + (10*i)), 0 - self.BULLET.getHeight(), 1))
+                        self.ENEMYBULLETS[-1].setScale(4)
+                        self.ENEMYBULLETS[-1].updatePOS()
+                    self.TIMER_MS2 = 0
 
-            for i in range(len(self.BULLETS)-1, -1, -1):
+            for i in range(len(self.BULLETS) - 1, -1, -1):
                 self.BULLETS[i].bulletMovement()
                 self.BULLETS[i].updatePOS()
 
-            for i in range(len(self.ENEMYBULLETS)-1, -1, -1):
-                self.ENEMYBULLETS[i].SPD = 5
+            for i in range(len(self.ENEMYBULLETS) - 1, -1, -1):
+                self.ENEMYBULLETS[i].SPD = 4
                 self.ENEMYBULLETS[i].bulletMovement()
                 self.ENEMYBULLETS[i].updatePOS()
 
             for i in self.STARS:
                 i.moveBoxWrap(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
+
+            for i in range(len(self.BULLETS) - 1, -1, -1):
+                if self.BULLETS[i].X < (0 - self.BULLETS[i].getHeight()):
+                    self.BULLETS.pop(i)
+
+            for i in range(len(self.ENEMYBULLETS) - 1, -1, -1):
+                if self.ENEMYBULLETS[i].X > (self.WINDOW.getVirtualHeight() + self.ENEMYBULLETS[i].getHeight()):
+                    self.ENEMYBULLETS.pop(i)
 
 
             for items in self.BULLETS:
@@ -512,6 +537,14 @@ class Game:
                     self.BAR.setScaleX(50)
                     BOSSHEALTH -= 10
                     self.BAR.updateDimension()
+
+            for item in self.ENEMYBULLETS:
+                for items in self.BULLETS:
+                    if self.getSpriteCollision(item, items):
+                        self.BULLETS.pop(self.BULLETS.index(items))
+                        self.ENEMYBULLETS.pop(self.ENEMYBULLETS.index(item))
+                        self.SCORE += 5
+                        self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
 
             if BOSSHEALTH <= 0:
                 self.SCORE += 300
@@ -532,6 +565,25 @@ class Game:
                 for i in range(len(self.POSITIONARRAYS[4]) - 1, -1, -1):
                     self.POSITIONARRAYS[4].pop(i)
                 self.winScreen()
+
+            for item in self.ENEMYBULLETS:
+                if self.getSpriteCollision(item, self.PLAYER):
+                    for i in range(len(self.BULLETS)-1, -1, -1):
+                        self.BULLETS.pop(i)
+                    for i in range(len(self.ENEMYBULLETS)-1, -1, -1):
+                        self.ENEMYBULLETS.pop(i)
+
+                    for i in range(len(self.POSITIONARRAYS[0]) -1, -1, -1):
+                        self.POSITIONARRAYS[0].pop(i)
+                    for i in range(len(self.POSITIONARRAYS[1]) -1, -1, -1):
+                        self.POSITIONARRAYS[1].pop(i)
+                    for i in range(len(self.POSITIONARRAYS[2]) -1, -1, -1):
+                        self.POSITIONARRAYS[2].pop(i)
+                    for i in range(len(self.POSITIONARRAYS[3]) -1, -1, -1):
+                        self.POSITIONARRAYS[3].pop(i)
+                    for i in range(len(self.POSITIONARRAYS[4]) -1, -1, -1):
+                        self.POSITIONARRAYS[4].pop(i)
+                    self.endScreen()
 
 
 
@@ -557,4 +609,4 @@ class Game:
 if __name__ == "__main__":
     GAME = Game()
 
-    GAME.bossTime()
+    GAME.startScreen()

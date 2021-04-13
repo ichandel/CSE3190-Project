@@ -585,8 +585,6 @@ class Game:
                         self.POSITIONARRAYS[4].pop(i)
                     self.endScreen()
 
-
-
             self.WINDOW.clearScreen()
             for item in self.BULLETS:
                 self.WINDOW.getScreen().blit(item.getScreen(), item.getPOS())
@@ -603,7 +601,6 @@ class Game:
             self.WINDOW.getScreen().blit(self.BARLFT.getBox(), self.BARLFT.getPOS())
             self.WINDOW.getScreen().blit(self.BARRGT.getBox(), self.BARRGT.getPOS())
             self.WINDOW.updateFrame()
-
 
 
 if __name__ == "__main__":

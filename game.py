@@ -216,8 +216,10 @@ class Game:
         self.SUBTITLE7 = Text("Press ENTER to continue to face the Mothership.", FONTSIZE=20)
         self.TITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.TITLE3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.TITLE3.getHeight()) // 2 - 50)
         self.SUBTITLE7.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE7.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE7.getHeight()) // 2 + 20)
+        self.SUBTITLE3.setPOS((self.WINDOW.getVirtualWidth() - self.SUBTITLE3.getWidth()) // 2, (self.WINDOW.getVirtualHeight() - self.SUBTITLE3.getHeight()) // 2 + 50)
         self.WINDOW.getScreen().blit(self.TITLE3.getScreen(), self.TITLE3.getPOS())
         self.WINDOW.getScreen().blit(self.SUBTITLE7.getScreen(), self.SUBTITLE7.getPOS())
+        self.WINDOW.getScreen().blit(self.SUBTITLE3.getScreen(), self.SUBTITLE3.getPOS())
         for i in self.STARS:
             self.WINDOW.getScreen().blit(i.getBox(), i.getPOS())
         self.WINDOW.updateFrame()
@@ -425,7 +427,7 @@ class Game:
                                     self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
 
             if TOTALALIENS == 0 and self.SCORE == 250:
-                self.breakScreen()
+                self.bossTime()
 
             self.WINDOW.clearScreen()
             for i in self.STARS:
@@ -448,7 +450,6 @@ class Game:
         contains code to create and run all of phase 2 and its roles
         """
 
-        self.SCORE = 0
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
         self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.PLAYER.getWidth() // 2, self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
         self.BOSS = alien(images.ALIEN_SHIP, -1000, -1000)
@@ -488,9 +489,20 @@ class Game:
                     self.BULLETS[-1].updatePOS()
                     self.TIMER_MS1 = 0
 
+            if self.TIMER_MS2 > 500:
+                self.ENEMYBULLETS.append(bullets(images.ENEMYBULLET, (self.BOSS.X + (self.BOSS.getWidth() // 2)) - (self.BULLET.getWidth() // 2) + 37.5, self.BOSS.Y + self.BOSS.getHeight(), 1))
+                self.ENEMYBULLETS[-1].setScale(4)
+                self.ENEMYBULLETS[-1].updatePOS()
+                self.TIMER_MS2 = 0
+
             for i in range(len(self.BULLETS)-1, -1, -1):
                 self.BULLETS[i].bulletMovement()
                 self.BULLETS[i].updatePOS()
+
+            for i in range(len(self.ENEMYBULLETS)-1, -1, -1):
+                self.ENEMYBULLETS[i].SPD = 5
+                self.ENEMYBULLETS[i].bulletMovement()
+                self.ENEMYBULLETS[i].updatePOS()
 
             for i in self.STARS:
                 i.moveBoxWrap(KEYPRESSES, self.WINDOW.getVirtualWidth(), self.WINDOW.getVirtualHeight())
@@ -530,6 +542,8 @@ class Game:
                 self.WINDOW.getScreen().blit(item.getScreen(), item.getPOS())
             for i in self.STARS:
                 self.WINDOW.getScreen().blit(i.getBox(), i.getPOS())
+            for item in self.ENEMYBULLETS:
+                self.WINDOW.getScreen().blit(item.getScreen(), item.getPOS())
             self.WINDOW.getScreen().blit(self.SCORE_TEXT.getScreen(), self.SCORE_TEXT.getPOS())
             self.WINDOW.getScreen().blit(self.PLAYER.getScreen(), self.PLAYER.getPOS())
             self.WINDOW.getScreen().blit(self.BOSS.getScreen(), self.BOSS.getPOS())
@@ -545,4 +559,4 @@ class Game:
 if __name__ == "__main__":
     GAME = Game()
 
-    GAME.startScreen()
+    GAME.bossTime()

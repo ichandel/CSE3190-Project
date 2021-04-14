@@ -16,8 +16,8 @@ import pygame
 from random import randrange
 from box import Box
 
-
 class Game:
+
     pygame.init()
 
     def __init__(self):
@@ -108,7 +108,7 @@ class Game:
         self.ARROW.setPOS(self.temp1, self.temp2)
         self.SCORE = 0
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
-
+        self.PLAYER = Ships(images.SHIP1)
         while True:
             # Inputs
             for event in pygame.event.get():
@@ -310,6 +310,7 @@ class Game:
             self.BULLETS.pop(self.BULLETS.index(item))
         for item in self.ENEMYBULLETS:
             self.ENEMYBULLETS.pop(self.ENEMYBULLETS.index(item))
+
 
         while True:
 
@@ -565,6 +566,7 @@ class Game:
             for i in range(len(self.ENEMYBULLETS) - 1, -1, -1):
                 if self.ENEMYBULLETS[i].Y > (self.WINDOW.getVirtualHeight() + self.BULLET.getHeight()):
                     self.ENEMYBULLETS.pop(i)
+
 
             for items in self.BULLETS:
                 if self.getSpriteCollision(self.BOSS, items):

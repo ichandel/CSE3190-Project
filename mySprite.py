@@ -50,19 +50,6 @@ class MySprite:
         """
         self.DIMENSION = (self.WIDTH, self.HEIGHT)
 
-    def wasdMove(self, KEYPRESSES):
-        # CHECK KEYPRESSES
-        if KEYPRESSES[pygame.K_d] == 1:
-            self.X = self.X + self.SPD
-        if KEYPRESSES[pygame.K_a] == 1:
-            self.X -= self.SPD
-        if KEYPRESSES[pygame.K_w] == 1:
-            self.Y -= self.SPD
-        if KEYPRESSES[pygame.K_s] == 1:
-            self.Y += self.SPD
-
-        self.POS = (self.X, self.Y)
-
     def adMove(self, KEYPRESSES):
         # CHECK KEYPRESSES
         if KEYPRESSES[pygame.K_d] == 1:

@@ -28,11 +28,6 @@ class Ships(MySprite):
             self.SCREEN = pygame.transform.flip(self.SCREEN, True, False)
             self.X_FLIP = True
 
-    def wasdMove(self, KEYPRESSES, MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH=0, MIN_HEIGHT=0):
-        super().wasdMove(KEYPRESSES)
-        self.checkBoundaries(MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH, MIN_HEIGHT)
-        self.flipImageX(KEYPRESSES)
-
     def adMove(self, KEYPRESSES, MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH=0, MIN_HEIGHT=0):
         super().adMove(KEYPRESSES)
         self.checkBoundaries(MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH, MIN_HEIGHT)

@@ -28,34 +28,3 @@ class ImageSprite(MySprite):
             self.SCREEN = pygame.transform.flip(self.SCREEN, True, False)
             self.X_FLIP = True
 
-    def wasdMove(self, KEYPRESSES):
-        super().wasdMove(KEYPRESSES)
-        self.flipImageX(KEYPRESSES)
-
-    def adMove(self, KEYPRESSES, MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH=0, MIN_HEIGHT=0):
-        super().adMove(KEYPRESSES)
-        self.checkBoundaries(MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH, MIN_HEIGHT)
-        self.flipImageX(KEYPRESSES)
-
-    def enemyMovement(self,MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH=0, MIN_HEIGHT=0):
-        self.X += self.MOVEMENTX
-        if self.X == MAX_WIDTH:
-            self.Y += self.MOVEMENTY
-            self.MOVEMENTX = self.MOVEMENTX*-1
-        elif self.X == MIN_WIDTH:
-            self.Y += self.MOVEMENTY
-            self.MOVEMENTX = self.MOVEMENTX*-1
-        self.updatePOS()
-
-    def checkBoundaries(self, MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH, MIN_HEIGHT):
-        if self.X > MAX_WIDTH - self.getWidth():
-            self.X = MAX_WIDTH - self.getWidth()
-        elif self.X < MIN_WIDTH:
-            self.X = MIN_WIDTH
-        if self.Y > MAX_HEIGHT - self.getHeight():
-            self.Y = MAX_HEIGHT - self.getHeight()
-        elif self.Y < MIN_HEIGHT:
-            self.Y = MIN_HEIGHT
-        self.updatePOS()
-
-

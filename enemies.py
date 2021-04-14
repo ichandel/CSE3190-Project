@@ -25,14 +25,6 @@ class alien(MySprite):
             SCALE_Y = SCALE_X
         self.SCREEN = pygame.transform.scale(self.SCREEN, (int(self.getWidth()//SCALE_X), int(self.getHeight()//SCALE_Y)))
 
-    def flipImageX(self, KEY_PRESSES):
-        if KEY_PRESSES[pygame.K_d] == 1 and self.X_FLIP:
-            self.SCREEN = pygame.transform.flip(self.SCREEN, True, False)
-            self.X_FLIP = False
-        if KEY_PRESSES[pygame.K_a] == 1 and not self.X_FLIP:
-            self.SCREEN = pygame.transform.flip(self.SCREEN, True, False)
-            self.X_FLIP = True
-
     def enemyMovement(self):
         self.X += self.SPD
         if self.X == self.RIGHTBORDER:

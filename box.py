@@ -36,17 +36,6 @@ class Box:
 
         self.POS = (self.X, self.Y)
 
-    def checkBoundaries(self, MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH=0, MIN_HEIGHT=0):
-        if self.X > MAX_WIDTH - self.SCREEN.get_rect().width:
-            self.X = MAX_WIDTH - self.SCREEN.get_rect().width
-        elif self.X < MIN_WIDTH:
-            self.X = MIN_WIDTH
-        if self.Y > MAX_HEIGHT - self.SCREEN.get_rect().height:
-            self.Y = MAX_HEIGHT - self.SCREEN.get_rect().height
-        elif self.Y < MIN_HEIGHT:
-            self.Y = MIN_HEIGHT
-
-        self.POS = (self.X, self.Y)
 
     def wrapBox(self, MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH=0, MIN_HEIGHT=0):
         if self.X > MAX_WIDTH:
@@ -61,10 +50,6 @@ class Box:
     def moveBoxWrap(self, KEYPRESSES, MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH=0, MIN_HEIGHT=0):
         self.moveBox(KEYPRESSES)
         self.wrapBox(MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH, MIN_HEIGHT)
-
-    def moveBoxChkBoundaries(self, KEYPRESSES, MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH=0, MIN_HEIGHT=0):
-        self.moveBox(KEYPRESSES)
-        self.checkBoundaries(MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH, MIN_HEIGHT)
 
     def updateDimension(self):
         """

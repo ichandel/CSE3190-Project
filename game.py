@@ -451,7 +451,8 @@ class Game:
         """
         contains code to create and run all of phase 2 and its roles
         """
-
+        for i in range(len(self.ENEMYBULLETS) - 1, -1, -1):
+            self.ENEMYBULLETS.pop(i)
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
         self.PLAYER.setPOS(self.WINDOW.getVirtualWidth() // 2 - self.PLAYER.getWidth() // 2, self.WINDOW.getVirtualHeight() - self.PLAYER.getHeight() - 50)
         self.BOSS = alien(images.MOTHERSHIP, -1000, -1000)

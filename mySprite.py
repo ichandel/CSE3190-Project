@@ -109,7 +109,3 @@ class MySprite:
             self.Y = MINHEIGHT
 
         self.updatePOS()
-
-    def wasdMoveChkBounds(self, KEYPRESSES, MAXWIDTH, MAXHEIGHT, MINWIDTH=0, MINHEIGHT=0):
-        self.wasdMove(KEYPRESSES)
-        self.checkBounds(MAXWIDTH, MAXHEIGHT, MINWIDTH, MINHEIGHT)

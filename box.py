@@ -9,11 +9,15 @@ from window import Window
 from loader import Colour
 
 class Box:
-    '''
-    Creates a box
-    '''
-
     def __init__(self, WIDTH=1, HEIGHT=1, X=0, Y=0, COLOR=Colour.WHITE):
+        """
+        initializes box
+        :param WIDTH: int
+        :param HEIGHT: int
+        :param X: int
+        :param Y: int
+        :param COLOR: object
+        """
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.DIMENSION = (self.WIDTH, self.HEIGHT)
@@ -27,6 +31,11 @@ class Box:
 
     # --- MODIFIER METHODS (SETTER) --- #
     def moveBox(self, KEYPRESSES):
+        """
+        moves box
+        :param KEYPRESSES: object
+        :return: none
+        """
         # CHECK KEYPRESSES
         if KEYPRESSES[pygame.K_d] == 1:
             self.X = self.X + 1
@@ -38,6 +47,14 @@ class Box:
 
 
     def wrapBox(self, MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH=0, MIN_HEIGHT=0):
+        """
+        wraps box around screen when it moves out of sight
+        :param MAX_WIDTH: int
+        :param MAX_HEIGHT: int
+        :param MIN_WIDTH: int
+        :param MIN_HEIGHT: int
+        :return: none
+        """
         if self.X > MAX_WIDTH:
             self.X = -self.SCREEN.get_rect().width
         elif self.X < MIN_WIDTH - self.SCREEN.get_rect().width:
@@ -48,6 +65,15 @@ class Box:
             self.Y = MAX_HEIGHT
 
     def moveBoxWrap(self, KEYPRESSES, MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH=0, MIN_HEIGHT=0):
+        """
+        combines moveBox and wrapBox
+        :param KEYPRESSES: object
+        :param MAX_WIDTH: int
+        :param MAX_HEIGHT: int
+        :param MIN_WIDTH: int
+        :param MIN_HEIGHT: int
+        :return: none
+        """
         self.moveBox(KEYPRESSES)
         self.wrapBox(MAX_WIDTH, MAX_HEIGHT, MIN_WIDTH, MIN_HEIGHT)
 
@@ -93,34 +119,3 @@ class Box:
 
     def getHeight(self):
         return self.SCREEN.get_rect().height
-
-
-if __name__ == "__main__":
-    import sys
-    from random import randrange
-    pygame.init()
-    WINDOW = Window()
-    WINDOW.setBackgroundColor(Colour.BLACK)
-    #WHITE_BOX = Box(50, 50)
-    BOXES = []
-    for i in range(100):
-        SIZE = randrange(2, 10)
-        BOXES.append(Box(SIZE, SIZE, randrange(WINDOW.getVirtualWidth()), randrange(WINDOW.getVirtualHeight())))
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-        KEY_PRESSES = pygame.key.get_pressed()
-
-        for i in BOXES:
-            i.moveBoxWrap(KEY_PRESSES, WINDOW.getVirtualWidth(), WINDOW.getVirtualHeight())
-
-        # WHITE_BOX.moveBoxWrap(KEY_PRESSES, WINDOW.getVirtualWidth(), WINDOW.getVirtualHeight())
-
-        # Outputs
-        WINDOW.clearScreen()
-        for i in BOXES:
-            WINDOW.getScreen().blit(i.getBox(), i.getPOS())
-        WINDOW.updateFrame()

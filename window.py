@@ -41,16 +41,6 @@ class Window:
         else:
             self.SCREEN.blit(self.BACKGROUND_IMAGE.getScreen(), self.BACKGROUND_IMAGE.getPOS())
 
-    def setBackgroundImage(self, IMAGE_FILE):
-        self.BACKGROUND_IMAGE = ImageSprite(IMAGE_FILE)
-        # Scale the Image to fit the Window
-        if self.BACKGROUND_IMAGE.getWidth() < self.getVirtualWidth():
-            self.BACKGROUND_IMAGE.setScale(self.BACKGROUND_IMAGE.getWidth() / self.getVirtualWidth())
-        if self.BACKGROUND_IMAGE.getHeight() < self.getVirtualHeight():
-            self.BACKGROUND_IMAGE.setScale(self.BACKGROUND_IMAGE.getHeight() / self.getVirtualHeight())
-        self.clearScreen()
-
-
     def setBackgroundColor(self, COLOR):
         self.BACKGROUND = COLOR
 

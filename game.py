@@ -23,23 +23,29 @@ class Game:
     def __init__(self):
         self.WINDOW = Window(WIDTH=1920, HEIGHT=1080, FPS=60)
         self.WINDOW.setBackgroundColor(Colour.BLACK)
-        self.PLAYER = Ships(images.SHIP1)
+        self.PLAYER = Ships(images.SHIP1) # player ship default
+        # OPTPLAYER variables are for ship selection
         self.OPTPLAYER = Ships(images.SHIP1)
         self.OPTPLAYER.setScale(1)
         self.OPTPLAYER2 = Ships(images.SHIP2)
         self.OPTPLAYER2.setScale(1)
         self.OPTPLAYER3 = Ships(images.SHIP3)
         self.OPTPLAYER3.setScale(1.2)
+        # alien variable used for x and y placements
         self.ALIEN = alien(images.ALIEN_SHIP, -1000, -1000)
         self.ALIEN.setScale(1.8)
+        # ship select arrow
         self.ARROW = ImageSprite(images.UP_ARROW)
         self.ARROW.setScale(4)
+        # score related variables
         self.SCORE = 0
         self.SCORE_TEXT = Text(f"Score: {self.SCORE}")
+        # bullets used for x and y placements and arrays used to store bullet objects
         self.BULLET = bullets(images.BULLET, -1000, -1000, 0)
         self.BULLETS = []
         self.ENEMYBULLETS = []
         self.POSITIONARRAYS = [[], [], [], [], []]
+        # Column and Row values are used to place aliens on screen, Column being the X value and row being the Y value
         self.COLUMN1X = ((self.WINDOW.getVirtualWidth() // 6) * 1) - self.ALIEN.getWidth() // 2
         self.COLUMN2X = ((self.WINDOW.getVirtualWidth() // 6) * 2) - self.ALIEN.getWidth() // 2
         self.COLUMN3X = (self.WINDOW.getVirtualWidth() // 2) - self.ALIEN.getWidth() // 2
@@ -50,25 +56,25 @@ class Game:
         self.ROW3Y = (self.WINDOW.getVirtualHeight() // 12) * 3
         self.ROW4Y = (self.WINDOW.getVirtualHeight() // 12) * 4
         self.ROW5Y = (self.WINDOW.getVirtualHeight() // 12) * 5
+        # appended row values into one array in order to ease alien placement
         self.ROWYVALUES = []
         self.ROWYVALUES.append(self.ROW1Y)
         self.ROWYVALUES.append(self.ROW2Y)
         self.ROWYVALUES.append(self.ROW3Y)
         self.ROWYVALUES.append(self.ROW4Y)
         self.ROWYVALUES.append(self.ROW5Y)
-        self.PRESSED = False
-        self.TEMP1 = (self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2 - 300
+        self.PRESSED = False  # checks to see if the player has fired
+        self.TEMP1 = (self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2 - 300 # arrow placement variable
         self.TEMP2 = (self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 275
-        self.TIMER = pygame.time.Clock()
+        # player and enemy shooting timers
         self.TIMER_MS1 = 400
         self.TIMER_MS2 = 300
-        self.TIME_LEFT = 30
-        self.STARS = []
-        for i in range(100):
+        self.STARS = [] # array to store background stars
+        for i in range(100): # creates background stars
             SIZE = randrange(2, 10)
             self.STARS.append(
                 Box(SIZE, SIZE, randrange(self.WINDOW.getVirtualWidth()), randrange(self.WINDOW.getVirtualHeight())))
-        self.BARLENGTH = 200
+        self.BARLENGTH = 200 # Boss Bar Length
 
     def placeAliens(self):
         """
@@ -349,7 +355,7 @@ class Game:
 
             self.TIMER_MS1 += 5
             self.TIMER_MS2 += 5
-            if self.TIMER_MS1 > 300:
+            if self.TIMER_MS1 > 300:  # this if statement is for player shooting
                 if KEYPRESSES[pygame.K_SPACE] == 1:
                     self.PRESSED = True
                     self.BULLETS.append(bullets(images.BULLET, (self.PLAYER.X + (self.PLAYER.getWidth() // 2)) - (
@@ -358,7 +364,7 @@ class Game:
                     self.BULLETS[-1].updatePOS()
                     self.TIMER_MS1 = 0
 
-            if self.TIMER_MS2 > 500:
+            if self.TIMER_MS2 > 500:  # this if statement is for enemy shooting
                 SHOOTVAR = randrange(5)
                 while len(self.POSITIONARRAYS[SHOOTVAR]) <= 0:
                     SHOOTVAR = randrange(5)

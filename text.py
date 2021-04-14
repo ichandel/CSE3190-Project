@@ -30,23 +30,3 @@ class Text(MySprite): # a child class from the parent (MySprite) class. Example 
         """
         self.TEXT = NEW_TEXT
         self.SCREEN = self.FONT.render(self.TEXT, True, self.COLOUR)
-
-
-if __name__ == "__main__":
-    from window import Window
-    import sys
-
-    pygame.init()
-
-    WINDOW = Window()
-    TEXT1 = Text()
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-
-        WINDOW.getScreen().blit(TEXT1.getScreen(), TEXT1.getPOS())
-        WINDOW.updateFrame()

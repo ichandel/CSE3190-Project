@@ -108,7 +108,6 @@ class Game:
         self.ARROW.setPOS(self.temp1, self.temp2)
         self.SCORE = 0
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
-        self.PLAYER = Ships(images.SHIP1)
         while True:
             # Inputs
             for event in pygame.event.get():

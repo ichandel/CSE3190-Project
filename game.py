@@ -57,12 +57,8 @@ class Game:
         self.ROWYVALUES.append(self.ROW4Y)
         self.ROWYVALUES.append(self.ROW5Y)
         self.PRESSED = False
-        self.CHANGEDBORDERLEFT = 0
-        self.CHANGEDBORDERRIGHT = 0
-        self.chngleftmultiplier = 0
-        self.checked = False
-        self.temp1 = (self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2 - 300
-        self.temp2 = (self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 275
+        self.TEMP1 = (self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2 - 300
+        self.TEMP2 = (self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 275
         self.TIMER = pygame.time.Clock()
         self.TIMER_MS1 = 400
         self.TIMER_MS2 = 300
@@ -95,6 +91,12 @@ class Game:
             self.POSITIONARRAYS[4][i].setScale(1.8)
 
     def getSpriteCollision(self, SPRITE1, SPRITE2):
+        """
+        checks for sprite collision
+        :param SPRITE1: object
+        :param SPRITE2: object
+        :return: boolean
+        """
         if pygame.Rect.colliderect(SPRITE1.getRect(), SPRITE2.getRect()):
             return True
         else:
@@ -105,7 +107,7 @@ class Game:
         makes start screen for game
         """
 
-        self.ARROW.setPOS(self.temp1, self.temp2)
+        self.ARROW.setPOS(self.TEMP1, self.TEMP2)
         self.SCORE = 0
         self.SCORE_TEXT.setText(f"Score: {self.SCORE}")
         while True:
@@ -177,21 +179,21 @@ class Game:
             if KEYPRESSES[pygame.K_1]:
                 self.PLAYER = Ships(images.SHIP1)
                 self.PLAYER.setScale(1)
-                self.temp1 = (self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2 - 300
-                self.temp2 = (self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 275
-                self.ARROW.setPOS(self.temp1, self.temp2)
+                self.TEMP1 = (self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2 - 300
+                self.TEMP2 = (self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 275
+                self.ARROW.setPOS(self.TEMP1, self.TEMP2)
             if KEYPRESSES[pygame.K_2]:
                 self.PLAYER = Ships(images.SHIP2)
                 self.PLAYER.setScale(1)
-                self.temp1 = (self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2
-                self.temp2 = (self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 275
-                self.ARROW.setPOS(self.temp1, self.temp2)
+                self.TEMP1 = (self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2
+                self.TEMP2 = (self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 275
+                self.ARROW.setPOS(self.TEMP1, self.TEMP2)
             if KEYPRESSES[pygame.K_3]:
                 self.PLAYER = Ships(images.SHIP3)
                 self.PLAYER.setScale(1.2)
-                self.temp1 = (self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2 + 300
-                self.temp2 = (self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 325
-                self.ARROW.setPOS(self.temp1, self.temp2)
+                self.TEMP1 = (self.WINDOW.getVirtualWidth() - self.ARROW.getWidth()) // 2 + 300
+                self.TEMP2 = (self.WINDOW.getVirtualHeight() - self.ARROW.getHeight()) // 2 + 325
+                self.ARROW.setPOS(self.TEMP1, self.TEMP2)
             self.WINDOW.updateFrame()
 
             if KEYPRESSES[pygame.K_RETURN]:  # this line runs the main game once the user is ready
@@ -200,6 +202,10 @@ class Game:
                 exit()
 
     def endScreen(self):
+        """
+        makes end screen for game
+        :return:
+        """
 
         self.TITLE2 = Text("The Raiders Took Down Your Ship!")
         self.SUBTITLE2 = Text("Press LSHIFT to try and stop them again.", FONTSIZE=20)
@@ -231,7 +237,11 @@ class Game:
             if KEYPRESSES[pygame.K_ESCAPE]:
                 exit()
 
-    def breakScreen(self):  # screen between levels to allow for a break
+    def breakScreen(self):
+        """
+        makes screen for break before boss phase
+        :return:
+        """
 
         self.TITLE3 = Text("You Defeated The Raiders! Uh oh, looks like the Mothership is coming!")
         self.SUBTITLE7 = Text("Press ENTER to continue to face the Mothership.", FONTSIZE=20)
@@ -255,7 +265,11 @@ class Game:
             if KEYPRESSES[pygame.K_RETURN]:
                 self.bossTime()
 
-    def winScreen(self):  # screen displayed after completing level 2
+    def winScreen(self):
+        """
+        makes screen to display after beating boss phase
+        :return:
+        """
 
         self.WINDOW.clearScreen()
         self.TITLE4 = Text("You Defeated All The Raiders!")
@@ -479,7 +493,7 @@ class Game:
 
     def bossTime(self):
         """
-        contains code to create and run all of phase 2 and its roles
+        contains code to create and run all of boss phase and its roles
         """
         for i in range(len(self.ENEMYBULLETS) - 1, -1, -1):
             self.ENEMYBULLETS.pop(i)
